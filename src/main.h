@@ -256,6 +256,10 @@ public:
         return DateTimeStrFormat(nTime) + ": " + msg;
     }
 
+    bool operator < (const CPepeMessage& a) const
+    {
+        return (nTime < a.nTime);
+    }
 };
 
 /** Position on disk for a particular transaction. */
