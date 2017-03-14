@@ -9,7 +9,7 @@
 #include "clientversion.h"
 
 //
-// Bootup the masternode, look for a 10000 MEME input and register on the network
+// Bootup the masternode, look for a 10000 PEPE input and register on the network
 //
 void CActiveMasternode::ManageStatus()
 {
@@ -96,7 +96,7 @@ void CActiveMasternode::ManageStatus()
             	return;
             }
 
-            /* donations are not supported in memetic.conf */
+            /* donations are not supported in pepecoin.conf */
             CScript donationAddress = CScript();
             int donationPercentage = 0;
 

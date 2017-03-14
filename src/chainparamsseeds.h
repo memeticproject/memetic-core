@@ -7,7 +7,7 @@
 // IPv4 as well as onion addresses are wrapped inside a IPv6 address accordingly.
 static const unsigned int pnSeed[] =
 {
-  // We will do this in DNS instead - seed.memeticproject.com
+  // We will do this in DNS instead - seed.pepecoinproject.com
 
 
 };

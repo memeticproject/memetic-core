@@ -1532,11 +1532,25 @@ int64_t nSubsidy = 20 * COIN;
   {
     nSubsidy = 20 * COIN;
   }
-  else if(nHeight > RESTART_POW_BLOCK)
+  else if(nHeight > RESTART_POW_BLOCK && nHeight < PEPE_REBRAND_HEIGHT)
   {
     nSubsidy = 10 * COIN;
     nSubsidy >>= (nHeight / 131400); // block reward halves roughly four times a year a year (every 365/4 days at 1440 blocks per day)
   }
+  else if(nHeight >= PEPE_REBRAND_HEIGHT)
+  {
+  	  // subsidy starts at 7 Coins per block for 43,200 blocks
+  	  if(nHeight <= (PEPE_REBRAND_HEIGHT + 43200))
+  	  {
+  	  	nSubsidy = 7 * COIN;
+  	  }
+  	  else
+  	  {
+  	  	nSubsidy = 5 * COIN;
+  	  	nSubsidy >>= ((nHeight - PEPE_REBRAND_HEIGHT) / 525600); // block reward halves once a year
+  	  }
+  }
+
   	return nSubsidy + nFees;
 
 }
@@ -1611,10 +1625,27 @@ int64_t nSubsidy = 20 * COIN;
         {
             return GetProofOfStakeRewardV1(pindexPrev, nCoinAge, nFees, nCoinValue);
         }
+        else if((!TestNet() && pindexPrev->nHeight > PEPE_REBRAND_HEIGHT) ||
+        	(TestNet() && pindexPrev->nHeight > PEPE_REBRAND_HEIGHT_TESTNET))
+        {
+        	return GetProofOfStakeRewardV3(pindexPrev, nCoinAge, nFees, nCoinValue);
+        }
         else
         {
             return GetProofOfStakeRewardV2(pindexPrev, nCoinAge, nFees, nCoinValue);
         }
+  }
+
+  // PEPE rebrand 7% pos
+  int64_t GetProofOfStakeRewardV3(const CBlockIndex* pindexPrev, int64_t nCoinAge, int64_t nFees, int64_t nCoinValue)
+  {
+        int64_t nHeight = pindexPrev->nHeight;
+        int64_t nRewardCoinYear = 7 * CENT; // 7% per year
+
+        // Now calculate the reward
+        int64_t nSubsidy = nCoinAge * nRewardCoinYear * 33 / (365 * 33 + 8); //integer equivalent of nCoinAge * nRewardCoinYear / 365.2424242..
+     
+        return nSubsidy + nFees;
   }
 
   // PEPE stake fix

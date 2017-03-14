@@ -29,7 +29,7 @@
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
-         <string>Memetic Network</string>
+         <string>PepeCoin Network</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout">
          <item row="1" column="0">
@@ -89,7 +89,7 @@
            <item>
             <widget class="QLabel" name="label_2">
              <property name="text">
-              <string>Memetic Node Count:</string>
+              <string>PepeCoin Node Count:</string>
              </property>
             </widget>
            </item>

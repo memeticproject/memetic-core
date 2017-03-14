@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>About Memetic</string>
+   <string>About PepeCoin</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
@@ -50,7 +50,7 @@
           <cursorShape>IBeamCursor</cursorShape>
          </property>
          <property name="text">
-          <string>&lt;b&gt;Memetic&lt;/b&gt; version</string>
+          <string>&lt;b&gt;PepeCoin&lt;/b&gt; version</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -102,7 +102,7 @@
         Copyright (c) 2014 DashCoin Developers
         Copyright (c) 2014 NetCoin Developers
         Copyright (c) 2015 Transfercoin Developer + Infernoman
-        Copyright (c) 2015-2016 Memetic Developers Coalition Of The Willing
+        Copyright (c) 2015-2016 PepeCoin Developers Coalition Of The Willing
 </string>
        </property>
        <property name="textInteractionFlags">

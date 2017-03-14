@@ -7,12 +7,12 @@ software written by Eric Young (eay@cryptsoft.com) and UPnP software written by
 Thomas Bernard.
 
 
-Mac OS X memeticd build instructions
+Mac OS X pepecoind build instructions
 Laszlo Hanyecz <solar@heliacal.net>
 Douglas Huff <dhuff@jrbobdobbs.org>
 
 
-See readme-qt.rst for instructions on building Memetic QT, the
+See readme-qt.rst for instructions on building PepeCoin QT, the
 graphical user interface.
 
 Tested on 10.5 and 10.6 intel.  PPC is not supported because it's big-endian.
@@ -27,7 +27,7 @@ but you can get the current version from http://developer.apple.com
 
 1.  Clone the github tree to get the source code:
 
-git clone http://gitlab.com/memetic/memetic/memetic memetic
+git clone http://gitlab.com/pepecoin/pepecoin/pepecoin pepecoin
 
 2.  Download and install MacPorts from http://www.macports.org/
 
@@ -41,14 +41,14 @@ sudo port install boost db48 openssl miniupnpc
 Optionally install qrencode (and set USE_QRCODE=1):
 sudo port install qrencode
 
-4.  Now you should be able to build memeticd:
+4.  Now you should be able to build pepecoind:
 
-cd memetic/src
+cd pepecoin/src
 make -f makefile.osx
 
 Run:
-  ./memeticd --help  # for a list of command-line options.
+  ./pepecoind --help  # for a list of command-line options.
 Run
-  ./memeticd -daemon # to start the memetic daemon.
+  ./pepecoind -daemon # to start the pepecoin daemon.
 Run
-  ./memeticd help # When the daemon is running, to get a list of RPC commands
+  ./pepecoind help # When the daemon is running, to get a list of RPC commands

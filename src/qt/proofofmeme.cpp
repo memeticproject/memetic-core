@@ -80,7 +80,7 @@ std::vector<char> memeContents((std::istreambuf_iterator<char>(memeFile)),
     }
     else if(pwalletMain->GetBalance() < 1)
     {
-      ui->txLineEdit->setText("ERROR: Need 1 MEME balance to send proof of meme.");
+      ui->txLineEdit->setText("ERROR: Need 1 PEPE balance to send proof of meme.");
     }
     else
     {

@@ -313,7 +313,7 @@ void OverviewPage::showOutOfSyncWarning(bool fShow)
 
 void OverviewPage::on_pushButton_clicked()
 {
-    //send message in 1 MEME OP_RETURN transaction
+    //send message in 1 PEPE OP_RETURN transaction
     if(ui->lineEdit->text().isNull() || ui->lineEdit->text().isEmpty())
     {
         //dont have nothin to write
@@ -356,7 +356,7 @@ void OverviewPage::on_pushButton_clicked()
     else if(pwalletMain->GetBalance() < 1)
     {
         QMessageBox infobox;
-        infobox.setText("ERROR: Need 1 MEME balance to send meme message.");
+        infobox.setText("ERROR: Need 1 PEPE balance to send meme message.");
         infobox.exec();
     }
     else
@@ -403,15 +403,24 @@ void OverviewPage::on_refreshButton_clicked()
     getMessages();
 }
 
+
 void OverviewPage::getMessages()
 {
     LogPrintf("getMessages\n");
     ui->listWidget->clear();
     //get messages from last 777 blocks, cache this to disk in future because going back too far causes slowdowns
-    
+    std::vector<CPepeMessage> cPMsgs;
     BOOST_FOREACH(const PAIRTYPE(uint256, CPepeMessage)& item, mapPepeMessages)
     {
-        CPepeMessage pmsg = item.second;
-        ui->listWidget->addItem(QString::fromStdString(pmsg.ToString()));
+         cPMsgs.push_back(item.second);
+        //ui->listWidget->addItem(QString::fromStdString(pmsg.ToString()));
+    }
+
+    sort(cPMsgs.begin(), cPMsgs.end());
+    
+    BOOST_FOREACH(CPepeMessage pmsg, cPMsgs)
+    {
+        //ui->listWidget->addItem(QString::fromStdString(pmsg.ToString()));
+        ui->listWidget->insertItem(0, QString::fromStdString(pmsg.ToString()));
     }
 }

@@ -43,7 +43,7 @@ SendCoinsDialog::SendCoinsDialog(QWidget *parent) :
 
 #if QT_VERSION >= 0x040700
     /* Do not move this to the XML file, Qt before 4.7 will choke on it */
-    ui->lineEditCoinControlChange->setPlaceholderText(tr("Enter a Memetic address (e.g. TVzkf3ahXFWhukoqs6wnZHqVFM3UvSDSP2)"));
+    ui->lineEditCoinControlChange->setPlaceholderText(tr("Enter a PepeCoin address (e.g. TVzkf3ahXFWhukoqs6wnZHqVFM3UvSDSP2)"));
 #endif
 
     addEntry();
@@ -622,7 +622,7 @@ void SendCoinsDialog::processSendCoinsReturn(const WalletModel::SendCoinsReturn 
         msgParams.second = CClientUIInterface::MSG_ERROR;
         break;
     case WalletModel::IXTransactionCreationFailed:
-        msgParams.first = tr("InstantX doesn't support sending values that high yet. Transactions are currently limited to 500 MEME.");
+        msgParams.first = tr("InstantX doesn't support sending values that high yet. Transactions are currently limited to 500 PEPE.");
         msgParams.second = CClientUIInterface::MSG_ERROR;
         break;
     case WalletModel::TransactionCommitFailed:
@@ -855,7 +855,7 @@ void SendCoinsDialog::coinControlChangeEdited(const QString& text)
         }
         else if (!addr.IsValid()) // Invalid address
         {
-            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid Memetic address"));
+            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid PepeCoin address"));
         }
         else // Valid address
         {

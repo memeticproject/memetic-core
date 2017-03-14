@@ -1044,7 +1044,7 @@ static std::string FormatException(std::exception* pex, const char* pszThread)
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "memetic";
+    const char* pszModule = "pepecoin";
 #endif
     if (pex)
         return strprintf(
@@ -1074,13 +1074,13 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Memetic
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Memetic
-    // Mac: ~/Library/Application Support/Memetic
-    // Unix: ~/.memetic
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\PepeCoin
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\PepeCoin
+    // Mac: ~/Library/Application Support/PepeCoin
+    // Unix: ~/.pepecoin
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Memetic";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "PepeCoin";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -1092,10 +1092,10 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     fs::create_directory(pathRet);
-    return pathRet / "Memetic";
+    return pathRet / "PepeCoin";
 #else
     // Unix
-    return pathRet / ".memetic";
+    return pathRet / ".pepecoin";
 #endif
 #endif
 }
@@ -1144,7 +1144,7 @@ void ClearDatadirCache()
 
 boost::filesystem::path GetConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-conf", "memetic.conf"));
+    boost::filesystem::path pathConfigFile(GetArg("-conf", "pepecoin.conf"));
     if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(false) / pathConfigFile;
     return pathConfigFile;
 }
@@ -1189,7 +1189,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "memeticd.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", "pepecoind.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }

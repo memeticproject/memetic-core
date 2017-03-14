@@ -9,7 +9,7 @@
 // Copyright (c) 2014 NetCoin Developers
 // Copyright (c) 2015 Transfercoin Developer
 // Copyright (c) 2015-2016 PepeCoin Developers
-// Copyright (c) 2016 The Memetic Developers
+// Copyright (c) 2016 The PepeCoin Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -26,6 +26,7 @@
 #include "hashblock.h"
 
 #include <list>
+#include <algorithm>
 
 class CValidationState;
 
@@ -58,6 +59,12 @@ class CPepeMessage;
 static const int64_t PEPE_STAKE_WINTER_SWITCH_HEIGHT = 312000;
 static const int64_t PEPE_STAKE_V2_SWITCH_HEIGHT = 32000;
 static const int64_t PEPE_STAKE_V2_SWITCH_HEIGHT_TESTNET = 10;
+
+// Rebrand Back To PEPE Hardfork
+// At this height, POS moves to 7%, POW moves to 7 for 1 month of blocks then 5 and then halving every year
+// and dev reward is implemented (3 dev addresses at 3% each)
+static const int64_t PEPE_REBRAND_HEIGHT = 490000;
+static const int64_t PEPE_REBRAND_HEIGHT_TESTNET = 100;
 
 /** The maximum allowed size for a serialized block, in bytes (network rule) */
 static const unsigned int MAX_BLOCK_SIZE = 20000000;
@@ -203,6 +210,7 @@ int64_t GetPIRRewardCoinYear(int64_t nCoinValue, int64_t nHeight);
 int64_t GetProofOfStakeReward(const CBlockIndex* pindexPrev, int64_t nCoinAge, int64_t nFees, int64_t nCoinValue);
 int64_t GetProofOfStakeRewardV1(const CBlockIndex* pindexPrev, int64_t nCoinAge, int64_t nFees, int64_t nCoinValue);
 int64_t GetProofOfStakeRewardV2(const CBlockIndex* pindexPrev, int64_t nCoinAge, int64_t nFees, int64_t nCoinValue);
+int64_t GetProofOfStakeRewardV3(const CBlockIndex* pindexPrev, int64_t nCoinAge, int64_t nFees, int64_t nCoinValue);
 bool IsInitialBlockDownload();
 bool IsConfirmedInNPrevBlocks(const CTxIndex& txindex, const CBlockIndex* pindexFrom, int nMaxDepth, int& nActualDepth);
 std::string GetWarnings(std::string strFor);
@@ -255,6 +263,11 @@ public:
     {
         return DateTimeStrFormat(nTime) + ": " + msg;
     }
+
+bool operator < (const CPepeMessage& a) const
+     {
+         return (nTime < a.nTime);
+     }
 
 };
 

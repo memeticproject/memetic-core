@@ -7,17 +7,17 @@
     <x>0</x>
     <y>0</y>
     <width>740</width>
-    <height>491</height>
+    <height>518</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Memetic - Debug window</string>
+   <string>PepeCoin - Debug window</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_info">
       <attribute name="title">
@@ -33,7 +33,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Memetic Core</string>
+          <string>PepeCoin Core</string>
          </property>
         </widget>
        </item>
@@ -319,7 +319,7 @@
        <item row="15" column="0">
         <widget class="QPushButton" name="openDebugLogfileButton">
          <property name="toolTip">
-          <string>Open the Memetic debug log file from the current data directory. This can take a few seconds for large log files.</string>
+          <string>Open the PepeCoin debug log file from the current data directory. This can take a few seconds for large log files.</string>
          </property>
          <property name="text">
           <string>&amp;Open</string>
@@ -345,7 +345,7 @@
        <item row="17" column="0">
         <widget class="QPushButton" name="showCLOptionsButton">
          <property name="toolTip">
-          <string>Show the memetic-Qt help message to get a list with possible Memetic command-line options.</string>
+          <string>Show the pepecoin-Qt help message to get a list with possible PepeCoin command-line options.</string>
          </property>
          <property name="text">
           <string>&amp;Show</string>

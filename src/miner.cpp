@@ -540,7 +540,7 @@ void ThreadStakeMiner(CWallet *pwallet)
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
 
     // Make this thread recognisable as the mining thread
-    RenameThread("memetic-miner");
+    RenameThread("pepecoin-miner");
 
     CReserveKey reservekey(pwallet);
 

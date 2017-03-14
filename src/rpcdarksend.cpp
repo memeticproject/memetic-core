@@ -37,7 +37,7 @@ void SendMoney(const CTxDestination &address, CAmount nValue, CWalletTx& wtxNew,
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
     }
 
-    // Parse memetic address
+    // Parse pepecoin address
     CScript scriptPubKey = GetScriptForDestination(address);
 
     // Create and send the transaction
@@ -59,8 +59,8 @@ Value darksend(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() == 0)
         throw runtime_error(
-            "darksend <memeticaddress> <amount>\n"
-            "memeticaddress, reset, or auto (AutoDenominate)"
+            "darksend <pepecoinaddress> <amount>\n"
+            "pepecoinaddress, reset, or auto (AutoDenominate)"
             "<amount> is a real and is rounded to the nearest 0.00000001"
             + HelpRequiringPassphrase());
 
@@ -81,14 +81,14 @@ Value darksend(const Array& params, bool fHelp)
 
     if (params.size() != 2)
         throw runtime_error(
-            "darksend <memeticaddress> <amount>\n"
-            "memeticaddress, denominate, or auto (AutoDenominate)"
+            "darksend <pepecoinaddress> <amount>\n"
+            "pepecoinaddress, denominate, or auto (AutoDenominate)"
             "<amount> is type \"real\" and will be rounded to the nearest 0.1"
             + HelpRequiringPassphrase());
 
     CBitcoinAddress address(params[0].get_str());
     if (!address.IsValid())
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid memetic address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid pepecoin address");
 
     // Amount
     CAmount nAmount = AmountFromValue(params[1]);
@@ -152,16 +152,16 @@ Value masternode(const Array& params, bool fHelp)
                 "  list         - Print list of all known masternodes (see masternodelist for more info)\n"
                 "  list-conf    - Print masternode.conf in JSON format\n"
                 "  outputs      - Print masternode compatible outputs\n"
-                "  start        - Start masternode configured in memetic.conf\n"
+                "  start        - Start masternode configured in pepecoin.conf\n"
                 "  start-alias  - Start single masternode by assigned alias configured in masternode.conf\n"
                 "  start-many   - Start all masternodes configured in masternode.conf\n"
                 "  status       - Print masternode status information\n"
-                "  stop         - Stop masternode configured in memetic.conf\n"
+                "  stop         - Stop masternode configured in pepecoin.conf\n"
                 "  stop-alias   - Stop single masternode by assigned alias configured in masternode.conf\n"
                 "  stop-many    - Stop all masternodes configured in masternode.conf\n"
                 "  winners      - Print list of masternode winners\n"
-                "  vote-many    - Vote on a Memetic initiative\n"
-                "  vote         - Vote on a Memetic initiative\n"
+                "  vote-many    - Vote on a PepeCoin initiative\n"
+                "  vote         - Vote on a PepeCoin initiative\n"
                 );
 
     if (strCommand == "stop")
@@ -784,7 +784,7 @@ Value masternodelist(const Array& params, bool fHelp)
                 "  rank           - Print rank of a masternode based on current block\n"
                 "  status         - Print masternode status: ENABLED / EXPIRED / VIN_SPENT / REMOVE / POS_ERROR (can be additionally filtered, partial match)\n"
                 "  addr            - Print ip address associated with a masternode (can be additionally filtered, partial match)\n"
-                "  votes          - Print all masternode votes for a Memetic initiative (can be additionally filtered, partial match)\n"
+                "  votes          - Print all masternode votes for a PepeCoin initiative (can be additionally filtered, partial match)\n"
                 "  lastpaid       - The last time a node was paid on the network\n"
                 );
     }

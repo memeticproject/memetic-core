@@ -3,19 +3,19 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About Memetic</source>
-        <translation>O Memetic</translation>
+        <source>About PepeCoin</source>
+        <translation>O PepeCoin</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;Memetic&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;Memetic&lt;/b&gt; verzija</translation>
+        <source>&lt;b&gt;PepeCoin&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;PepeCoin&lt;/b&gt; verzija</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2014 The Memetic developers</source>
+Copyright © 2014 The PepeCoin developers</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -58,8 +58,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-43"/>
-        <source>These are your Memetic addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
-        <translation>To so vaši Memetic naslovi za prejemanje plačil. Priporočeno je da vsakemu pošiljatelju namenite drugega in tako dobite večji pregled nad svojimi nakazili.</translation>
+        <source>These are your PepeCoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <translation>To so vaši PepeCoin naslovi za prejemanje plačil. Priporočeno je da vsakemu pošiljatelju namenite drugega in tako dobite večji pregled nad svojimi nakazili.</translation>
     </message>
     <message>
         <location line="+53"/>
@@ -73,8 +73,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+7"/>
-        <source>Sign a message to prove you own a Memetic address</source>
-        <translation>Podpišite sporočilo, kot dokazilo lastništva Memetic naslova</translation>
+        <source>Sign a message to prove you own a PepeCoin address</source>
+        <translation>Podpišite sporočilo, kot dokazilo lastništva PepeCoin naslova</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -88,8 +88,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-10"/>
-        <source>Verify a message to ensure it was signed with a specified Memetic address</source>
-        <translation>Potrdi sporočilo, da zagotovite, da je bilo podpisano z izbranim Memetic naslovom</translation>
+        <source>Verify a message to ensure it was signed with a specified PepeCoin address</source>
+        <translation>Potrdi sporočilo, da zagotovite, da je bilo podpisano z izbranim PepeCoin naslovom</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -256,8 +256,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+82"/>
-        <source>Memetic will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
-        <translation>Memetic se bo sedaj zaprl, da dokonča proces šifriranje. Pomnite, da tudi šifriranje vaše denarnice ne more v celoti zaščititi vaših kovancev pred krajo z zlonamernimi programi in računalniškimi virusi, če ti okužijo vaš računalnik.</translation>
+        <source>PepeCoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <translation>PepeCoin se bo sedaj zaprl, da dokonča proces šifriranje. Pomnite, da tudi šifriranje vaše denarnice ne more v celoti zaščititi vaših kovancev pred krajo z zlonamernimi programi in računalniškimi virusi, če ti okužijo vaš računalnik.</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -350,8 +350,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+4"/>
-        <source>Show information about Memetic</source>
-        <translation>Pokaži informacije o Memetic</translation>
+        <source>Show information about PepeCoin</source>
+        <translation>Pokaži informacije o PepeCoin</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -390,13 +390,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-55"/>
-        <source>Send coins to a Memetic address</source>
-        <translation>Pošlji kovance na Memetic naslov</translation>
+        <source>Send coins to a PepeCoin address</source>
+        <translation>Pošlji kovance na PepeCoin naslov</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>Modify configuration options for Memetic</source>
-        <translation>Spremeni nastavitve za Memetic</translation>
+        <source>Modify configuration options for PepeCoin</source>
+        <translation>Spremeni nastavitve za PepeCoin</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -436,8 +436,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-214"/>
         <location line="+551"/>
-        <source>Memetic</source>
-        <translation>Memetic</translation>
+        <source>PepeCoin</source>
+        <translation>PepeCoin</translation>
     </message>
     <message>
         <location line="-551"/>
@@ -446,8 +446,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+193"/>
-        <source>&amp;About Memetic</source>
-        <translation>&amp;O Memetic</translation>
+        <source>&amp;About PepeCoin</source>
+        <translation>&amp;O PepeCoin</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -498,13 +498,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+0"/>
         <location line="+58"/>
-        <source>Memetic client</source>
-        <translation>Memetic program</translation>
+        <source>PepeCoin client</source>
+        <translation>PepeCoin program</translation>
     </message>
     <message numerus="yes">
         <location line="+70"/>
-        <source>%n active connection(s) to Memetic network</source>
-        <translation><numerusform>%n aktivne povezave na Memetic omrežje</numerusform><numerusform>%n aktivnih povezav na Memetic omrežje</numerusform><numerusform>%n aktivnih povezav na Memetic omrežje</numerusform><numerusform>%n aktivnih povezav na Memetic omrežje</numerusform></translation>
+        <source>%n active connection(s) to PepeCoin network</source>
+        <translation><numerusform>%n aktivne povezave na PepeCoin omrežje</numerusform><numerusform>%n aktivnih povezav na PepeCoin omrežje</numerusform><numerusform>%n aktivnih povezav na PepeCoin omrežje</numerusform><numerusform>%n aktivnih povezav na PepeCoin omrežje</numerusform></translation>
     </message>
     <message>
         <location line="+488"/>
@@ -598,8 +598,8 @@ Naslov: %4
     <message>
         <location line="-15"/>
         <location line="+15"/>
-        <source>URI can not be parsed! This can be caused by an invalid Memetic address or malformed URI parameters.</source>
-        <translation>URI ne more biti razčlenjen! To se lahko zgodi zaradi neveljavnega Memetic naslova ali slabih parametrov URI.</translation>
+        <source>URI can not be parsed! This can be caused by an invalid PepeCoin address or malformed URI parameters.</source>
+        <translation>URI ne more biti razčlenjen! To se lahko zgodi zaradi neveljavnega PepeCoin naslova ali slabih parametrov URI.</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -721,8 +721,8 @@ Naslov: %4
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+104"/>
-        <source>A fatal error occurred. Memetic can no longer continue safely and will quit.</source>
-        <translation>Prišlo je do usodne napake. Program Memetic se ne more več varno nadaljevati in se bo zato zaprl. </translation>
+        <source>A fatal error occurred. PepeCoin can no longer continue safely and will quit.</source>
+        <translation>Prišlo je do usodne napake. Program PepeCoin se ne more več varno nadaljevati in se bo zato zaprl. </translation>
     </message>
 </context>
 <context>
@@ -1055,8 +1055,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid Memetic address.</source>
-        <translation>Vneseni naslov &quot;%1&quot; ni veljaven Memetic naslov.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid PepeCoin address.</source>
+        <translation>Vneseni naslov &quot;%1&quot; ni veljaven PepeCoin naslov.</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1074,8 +1074,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     <message>
         <location filename="../guiutil.cpp" line="+426"/>
         <location line="+12"/>
-        <source>memetic-Qt</source>
-        <translation>memetic-Qt</translation>
+        <source>pepecoin-Qt</source>
+        <translation>pepecoin-Qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -1147,13 +1147,13 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start Memetic after logging in to the system.</source>
-        <translation>Avtomatično zaženi Memetic ob zagonu sistema.</translation>
+        <source>Automatically start PepeCoin after logging in to the system.</source>
+        <translation>Avtomatično zaženi PepeCoin ob zagonu sistema.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start Memetic on system login</source>
-        <translation>&amp;Zaženi Memetic ob prijavi v sistem</translation>
+        <source>&amp;Start PepeCoin on system login</source>
+        <translation>&amp;Zaženi PepeCoin ob prijavi v sistem</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -1162,8 +1162,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the Memetic client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Avtomatično odpri vrata na routerju za Memetic program. To deluje le če vaš router podpira UPnP in je ta omogočen. </translation>
+        <source>Automatically open the PepeCoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <translation>Avtomatično odpri vrata na routerju za PepeCoin program. To deluje le če vaš router podpira UPnP in je ta omogočen. </translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1172,8 +1172,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the Memetic network through a SOCKS proxy (e.g. when connecting through Tor).</source>
-        <translation>Poveži se na Memetic omrežje skozi SOCKS proxy (npr. ko se povezujete prek Tora)</translation>
+        <source>Connect to the PepeCoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <translation>Poveži se na PepeCoin omrežje skozi SOCKS proxy (npr. ko se povezujete prek Tora)</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1247,8 +1247,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting Memetic.</source>
-        <translation>Tu lahko nastavite jezik uporabniškega vmesnika. Nastavitve bodo pričele delovati ob ponovnem zagonu Memetic aplikacije. </translation>
+        <source>The user interface language can be set here. This setting will take effect after restarting PepeCoin.</source>
+        <translation>Tu lahko nastavite jezik uporabniškega vmesnika. Nastavitve bodo pričele delovati ob ponovnem zagonu PepeCoin aplikacije. </translation>
     </message>
     <message>
         <location line="+11"/>
@@ -1314,8 +1314,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting Memetic.</source>
-        <translation>Ta nastavitev bo pričela delovati ob ponovnem zagonu Memetic aplikacije</translation>
+        <source>This setting will take effect after restarting PepeCoin.</source>
+        <translation>Ta nastavitev bo pričela delovati ob ponovnem zagonu PepeCoin aplikacije</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -1333,8 +1333,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     <message>
         <location line="+46"/>
         <location line="+247"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Memetic network after a connection is established, but this process has not completed yet.</source>
-        <translation>Prikazane informacije so morda zastarele. Vaša denarnica se avtomatično sinhronizira z Memetic omrežjem, ko je vzpostavljena povezava, toda ta proces še ni bil zaključen.</translation>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the PepeCoin network after a connection is established, but this process has not completed yet.</source>
+        <translation>Prikazane informacije so morda zastarele. Vaša denarnica se avtomatično sinhronizira z PepeCoin omrežjem, ko je vzpostavljena povezava, toda ta proces še ni bil zaključen.</translation>
     </message>
     <message>
         <location line="-173"/>
@@ -1407,7 +1407,7 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     <name>PaymentServer</name>
     <message>
         <location filename="../paymentserver.cpp" line="+107"/>
-        <source>Cannot start memetic: click-to-pay handler</source>
+        <source>Cannot start pepecoin: click-to-pay handler</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1575,8 +1575,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the memetic-Qt help message to get a list with possible Memetic command-line options.</source>
-        <translation>Prikaži memetic-Qt sporočilo za pomoč , ki prikaže vse možnosti ukazne vrstice Memetic aplikacije</translation>
+        <source>Show the pepecoin-Qt help message to get a list with possible PepeCoin command-line options.</source>
+        <translation>Prikaži pepecoin-Qt sporočilo za pomoč , ki prikaže vse možnosti ukazne vrstice PepeCoin aplikacije</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1595,13 +1595,13 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="-104"/>
-        <source>Memetic - Debug window</source>
-        <translation>Memetic - okno za odpravljanje napak</translation>
+        <source>PepeCoin - Debug window</source>
+        <translation>PepeCoin - okno za odpravljanje napak</translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>Memetic Core</source>
-        <translation>Memetic jedro</translation>
+        <source>PepeCoin Core</source>
+        <translation>PepeCoin jedro</translation>
     </message>
     <message>
         <location line="+256"/>
@@ -1610,8 +1610,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the Memetic debug log file from the current data directory. This can take a few seconds for large log files.</source>
-        <translation>Odpri Memetic datoteko zapisov odpravljanja napak iz trenutnega direktorija podatkov. Če so datoteke zapisov velike, to lahko traja nekaj sekund.</translation>
+        <source>Open the PepeCoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <translation>Odpri PepeCoin datoteko zapisov odpravljanja napak iz trenutnega direktorija podatkov. Če so datoteke zapisov velike, to lahko traja nekaj sekund.</translation>
     </message>
     <message>
         <location line="+102"/>
@@ -1620,8 +1620,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="+325"/>
-        <source>Welcome to the Memetic RPC console.</source>
-        <translation>Dobrodošli v Memetic RPC konzoli.</translation>
+        <source>Welcome to the PepeCoin RPC console.</source>
+        <translation>Dobrodošli v PepeCoin RPC konzoli.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1729,8 +1729,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
         <location line="+86"/>
         <location line="+86"/>
         <location line="+32"/>
-        <source>0.00 MEME</source>
-        <translation>123.456 MEME {0.00 ?}</translation>
+        <source>0.00 PEPE</source>
+        <translation>123.456 PEPE {0.00 ?}</translation>
     </message>
     <message>
         <location line="-191"/>
@@ -1799,8 +1799,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="+16"/>
-        <source>123.456 MEME</source>
-        <translation>123.456 MEME</translation>
+        <source>123.456 PEPE</source>
+        <translation>123.456 PEPE</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -1814,8 +1814,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-173"/>
-        <source>Enter a Memetic address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Vnesite Memetic naslov (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>Enter a PepeCoin address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
+        <translation>Vnesite PepeCoin naslov (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -1914,8 +1914,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="+247"/>
-        <source>WARNING: Invalid Memetic address</source>
-        <translation>OPOZORILO: Neveljaven Memetic naslov</translation>
+        <source>WARNING: Invalid PepeCoin address</source>
+        <translation>OPOZORILO: Neveljaven PepeCoin naslov</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -1988,8 +1988,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a Memetic address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Vnesite Memetic naslov (npr. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>Enter a PepeCoin address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
+        <translation>Vnesite PepeCoin naslov (npr. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
     </message>
 </context>
 <context>
@@ -2049,8 +2049,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this Memetic address</source>
-        <translation>Podpišite sporočilo, kot dokazilo lastništva Memetic naslova</translation>
+        <source>Sign the message to prove you own this PepeCoin address</source>
+        <translation>Podpišite sporočilo, kot dokazilo lastništva PepeCoin naslova</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2081,8 +2081,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified Memetic address</source>
-        <translation>Potrdite sporočilo, da zagotovite, da je bilo podpisano z izbranim Memetic naslovom</translation>
+        <source>Verify the message to ensure it was signed with the specified PepeCoin address</source>
+        <translation>Potrdite sporočilo, da zagotovite, da je bilo podpisano z izbranim PepeCoin naslovom</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -2092,8 +2092,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a Memetic address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
-        <translation>Vnesite Memetic naslov (npr. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
+        <source>Enter a PepeCoin address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
+        <translation>Vnesite PepeCoin naslov (npr. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
     </message>
     <message>
         <location line="-2"/>
@@ -2102,8 +2102,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter Memetic signature</source>
-        <translation>Vnesite Memetic podpis</translation>
+        <source>Enter PepeCoin signature</source>
+        <translation>Vnesite PepeCoin podpis</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -2681,8 +2681,8 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+173"/>
-        <source>Memetic version</source>
-        <translation>Memetic različica</translation>
+        <source>PepeCoin version</source>
+        <translation>PepeCoin različica</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2691,7 +2691,7 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Send command to -server or memeticd</source>
+        <source>Send command to -server or pepecoind</source>
         <translation>Pošlji ukaz na -server ali blackoind</translation>
     </message>
     <message>
@@ -2711,13 +2711,13 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
     </message>
     <message>
         <location line="+2"/>
-        <source>Specify configuration file (default: memetic.conf)</source>
-        <translation>Določi konfiguracijsko datoteko (privzeto: memetic.conf)</translation>
+        <source>Specify configuration file (default: pepecoin.conf)</source>
+        <translation>Določi konfiguracijsko datoteko (privzeto: pepecoin.conf)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Specify pid file (default: memeticd.pid)</source>
-        <translation>Določi pid datoteko (privzeto: memetic.pid)</translation>
+        <source>Specify pid file (default: pepecoind.pid)</source>
+        <translation>Določi pid datoteko (privzeto: pepecoin.pid)</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2734,13 +2734,13 @@ Ta oznaka se obarva rdeče, če je prioriteta manjša kot &quot;srednja&quot;.
         <source>%s, you must set a rpcpassword in the configuration file:
 %s
 It is recommended you use the following random password:
-rpcuser=memeticrpc
+rpcuser=pepecoinrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;PepeCoin Alert&quot; admin@foo.com
 </source>
         <translation type="unfinished"/>
     </message>
@@ -2846,8 +2846,8 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="-103"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Memetic will not work properly.</source>
-        <translation>Opozorilo: Prosimo preverite svoj datum in čas svojega računalnika! Če je vaša ura nastavljena napačno Memetic ne bo deloval.</translation>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong PepeCoin will not work properly.</source>
+        <translation>Opozorilo: Prosimo preverite svoj datum in čas svojega računalnika! Če je vaša ura nastavljena napačno PepeCoin ne bo deloval.</translation>
     </message>
     <message>
         <location line="+132"/>
@@ -3153,7 +3153,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+10"/>
-        <source>Initialization sanity check failed. Memetic is shutting down.</source>
+        <source>Initialization sanity check failed. PepeCoin is shutting down.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3218,13 +3218,13 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+4"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of Memetic</source>
-        <translation>Napaka pri nalaganju wallet.dat: denarnica zahteva novejšo verzijo Memetic</translation>
+        <source>Error loading wallet.dat: Wallet requires newer version of PepeCoin</source>
+        <translation>Napaka pri nalaganju wallet.dat: denarnica zahteva novejšo verzijo PepeCoin</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Wallet needed to be rewritten: restart Memetic to complete</source>
-        <translation>Denarnica mora biti prepisana: ponovno odprite Memetic za dokončanje</translation>
+        <source>Wallet needed to be rewritten: restart PepeCoin to complete</source>
+        <translation>Denarnica mora biti prepisana: ponovno odprite PepeCoin za dokončanje</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3288,8 +3288,8 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+125"/>
-        <source>Unable to bind to %s on this computer. Memetic is probably already running.</source>
-        <translation>Navezava v %s  na tem računalniku ni mogoča Memetic aplikacija je verjetno že zagnana.</translation>
+        <source>Unable to bind to %s on this computer. PepeCoin is probably already running.</source>
+        <translation>Navezava v %s  na tem računalniku ni mogoča PepeCoin aplikacija je verjetno že zagnana.</translation>
     </message>
     <message>
         <location line="-101"/>
@@ -3328,7 +3328,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+3"/>
-        <source>Cannot obtain a lock on data directory %s. Memetic is probably already running.</source>
+        <source>Cannot obtain a lock on data directory %s. PepeCoin is probably already running.</source>
         <translation type="unfinished"/>
     </message>
     <message>
