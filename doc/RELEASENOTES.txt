@@ -1,0 +1,4 @@
+PepeCoin release notes
+
+PepeCoin / PEPE v. 2.3.2.2-KekdaqMT -- Required Update
+Update to improve network connectivity and wallet stability.

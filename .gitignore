@@ -8,6 +8,14 @@ src/pepecoind
 pepecoin-qt
 Makefile
 qrc_bitcoin.cpp
+Makefile.Debug
+Makefile.release
+pepecoin-qt_plugin_import.cpp
+
+src/secp256k1/build-aux/
+src/qt/locale/bitcoin_en.qm
+
+
 #################
 ## Eclipse
 #################
@@ -50,6 +58,7 @@ local.properties
 *.suo
 *.user
 *.sln.docstates
+.vscode
 
 # Build results
 
@@ -223,3 +232,9 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+# More files to ignore
+.vscode
+.qmake.stash
+.autosave
+

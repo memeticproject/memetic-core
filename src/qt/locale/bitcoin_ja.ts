@@ -3,22 +3,22 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About Memetic</source>
+        <source>About PepeCoin</source>
         <translation>ブラックコインについて</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;Memetic&lt;/b&gt; version</source>
+        <source>&lt;b&gt;PepeCoin&lt;/b&gt; version</source>
         <translation>&lt;b&gt;ブラックコイン&lt;/b&gt;バージョン</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2014 The Memetic developers</source>
+Copyright © 2014 The PepeCoin developers</source>
         <translation>コピーライト © 2009-2014 The Bitcoin developers
 コピーライト © 2012-2014 The NovaCoin developers
-コピーライト © 2014 The Memetic developers</translation>
+コピーライト © 2014 The PepeCoin developers</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -60,7 +60,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-43"/>
-        <source>These are your Memetic addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <source>These are your PepeCoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
         <translation>これは支払いを受けるためのブラックコインのアドレス。支払い管理をするのため、各送信者へ、それぞれのアドレスを伝えたほうがいいです。</translation>
     </message>
     <message>
@@ -75,7 +75,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+7"/>
-        <source>Sign a message to prove you own a Memetic address</source>
+        <source>Sign a message to prove you own a PepeCoin address</source>
         <translation>所有権の証明するためのメサッジを署名する。</translation>
     </message>
     <message>
@@ -90,7 +90,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-10"/>
-        <source>Verify a message to ensure it was signed with a specified Memetic address</source>
+        <source>Verify a message to ensure it was signed with a specified PepeCoin address</source>
         <translation>受け取ったメッセージの署名を確保のため、メッセージを確認する。</translation>
     </message>
     <message>
@@ -258,7 +258,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+82"/>
-        <source>Memetic will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <source>PepeCoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
         <translation>ただいま、暗号化手順を完成するため、ブラックコインQTは閉じます。尚、ウォレットを暗号化をされたにしても、PCのウイルスから盗難防止の報償できないことを、ご理解をお願い足します。</translation>
     </message>
     <message>
@@ -352,7 +352,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+4"/>
-        <source>Show information about Memetic</source>
+        <source>Show information about PepeCoin</source>
         <translation>ブラックコインの情報を表示</translation>
     </message>
     <message>
@@ -392,12 +392,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-55"/>
-        <source>Send coins to a Memetic address</source>
+        <source>Send coins to a PepeCoin address</source>
         <translation>ブラックコインアドレスへコインを送る</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>Modify configuration options for Memetic</source>
+        <source>Modify configuration options for PepeCoin</source>
         <translation>ブラックコインの設定を変化する</translation>
     </message>
     <message>
@@ -438,7 +438,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-214"/>
         <location line="+551"/>
-        <source>Memetic</source>
+        <source>PepeCoin</source>
         <translation>ブラックコイン</translation>
     </message>
     <message>
@@ -448,7 +448,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+193"/>
-        <source>&amp;About Memetic</source>
+        <source>&amp;About PepeCoin</source>
         <translation>ブラックコインについて</translation>
     </message>
     <message>
@@ -500,12 +500,12 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+0"/>
         <location line="+58"/>
-        <source>Memetic client</source>
+        <source>PepeCoin client</source>
         <translation>ブラックコインクライアントソフトウェア</translation>
     </message>
     <message numerus="yes">
         <location line="+70"/>
-        <source>%n active connection(s) to Memetic network</source>
+        <source>%n active connection(s) to PepeCoin network</source>
         <translation><numerusform>ブラックコインネットワークへの%n アクティブな接続</numerusform></translation>
     </message>
     <message>
@@ -599,7 +599,7 @@ Address: %4
     <message>
         <location line="-15"/>
         <location line="+15"/>
-        <source>URI can not be parsed! This can be caused by an invalid Memetic address or malformed URI parameters.</source>
+        <source>URI can not be parsed! This can be caused by an invalid PepeCoin address or malformed URI parameters.</source>
         <translation>URIのパーズができませんでした！。原因は無効なブラックコインアドレスか不正なURIパラメータ。</translation>
     </message>
     <message>
@@ -722,7 +722,7 @@ Address: %4
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+104"/>
-        <source>A fatal error occurred. Memetic can no longer continue safely and will quit.</source>
+        <source>A fatal error occurred. PepeCoin can no longer continue safely and will quit.</source>
         <translation>致命的エラー。安全に続きができないため、バラックコインQTは閉じます。</translation>
     </message>
 </context>
@@ -1056,7 +1056,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid Memetic address.</source>
+        <source>The entered address &quot;%1&quot; is not a valid PepeCoin address.</source>
         <translation>入力されたアドレス &quot;%1&quot; 、有効なブラックコインアドレスではない。</translation>
     </message>
     <message>
@@ -1075,7 +1075,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../guiutil.cpp" line="+426"/>
         <location line="+12"/>
-        <source>memetic-Qt</source>
+        <source>pepecoin-Qt</source>
         <translation>ブラックコインQT</translation>
     </message>
     <message>
@@ -1148,12 +1148,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start Memetic after logging in to the system.</source>
+        <source>Automatically start PepeCoin after logging in to the system.</source>
         <translation>システムのログイン次第、自動的にブラックコインをスタート。</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start Memetic on system login</source>
+        <source>&amp;Start PepeCoin on system login</source>
         <translation>システムログイン次第、ブラックコインをスタート</translation>
     </message>
     <message>
@@ -1163,7 +1163,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the Memetic client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <source>Automatically open the PepeCoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
         <translation>自動的にルーターでブラックコインクライエントソフトウェアのポートを開く。ルーターはUPnPのサポートあり、UPnPを有効にするならできる。</translation>
     </message>
     <message>
@@ -1173,7 +1173,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the Memetic network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <source>Connect to the PepeCoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
         <translation>ブラックコインのネットワークへSOCKSプロキシで接続する（例：TORで接続するばい）</translation>
     </message>
     <message>
@@ -1248,7 +1248,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting Memetic.</source>
+        <source>The user interface language can be set here. This setting will take effect after restarting PepeCoin.</source>
         <translation>ユーザのインターフェースの言語の設定です。リスタートの後、有効します。</translation>
     </message>
     <message>
@@ -1315,7 +1315,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting Memetic.</source>
+        <source>This setting will take effect after restarting PepeCoin.</source>
         <translation>この設定はブラックコインをリスタートした後に有効する。</translation>
     </message>
     <message>
@@ -1334,7 +1334,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location line="+46"/>
         <location line="+247"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Memetic network after a connection is established, but this process has not completed yet.</source>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the PepeCoin network after a connection is established, but this process has not completed yet.</source>
         <translation>表示されている情報は時間遅れている。接続したら、ウォレットは自動的にブラックコインネットワークと同期しますが過程は完了してません。</translation>
     </message>
     <message>
@@ -1408,7 +1408,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <name>PaymentServer</name>
     <message>
         <location filename="../paymentserver.cpp" line="+107"/>
-        <source>Cannot start memetic: click-to-pay handler</source>
+        <source>Cannot start pepecoin: click-to-pay handler</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1576,7 +1576,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the memetic-Qt help message to get a list with possible Memetic command-line options.</source>
+        <source>Show the pepecoin-Qt help message to get a list with possible PepeCoin command-line options.</source>
         <translation>ブラックコインQTのコマンドラインのヘルプ情報を表示する。</translation>
     </message>
     <message>
@@ -1596,12 +1596,12 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="-104"/>
-        <source>Memetic - Debug window</source>
+        <source>PepeCoin - Debug window</source>
         <translation>ブラックコイン：デバッグウインドウ</translation>
     </message>
     <message>
         <location line="+25"/>
-        <source>Memetic Core</source>
+        <source>PepeCoin Core</source>
         <translation>ブラックコインコア</translation>
     </message>
     <message>
@@ -1611,7 +1611,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the Memetic debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <source>Open the PepeCoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
         <translation>現行のディレクトリからデバッグログファイルを開く。大きなファイルのばい、少し時間かかる。</translation>
     </message>
     <message>
@@ -1621,7 +1621,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="+325"/>
-        <source>Welcome to the Memetic RPC console.</source>
+        <source>Welcome to the PepeCoin RPC console.</source>
         <translation>ブラックコインRPCコンソールへようこそ。</translation>
     </message>
     <message>
@@ -1730,8 +1730,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <location line="+86"/>
         <location line="+86"/>
         <location line="+32"/>
-        <source>0.00 MEME</source>
-        <translation>123.456 MEME {0.00 ?}</translation>
+        <source>0.00 PEPE</source>
+        <translation>123.456 PEPE {0.00 ?}</translation>
     </message>
     <message>
         <location line="-191"/>
@@ -1800,8 +1800,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+16"/>
-        <source>123.456 MEME</source>
-        <translation>123.456 MEME</translation>
+        <source>123.456 PEPE</source>
+        <translation>123.456 PEPE</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -1815,7 +1815,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-173"/>
-        <source>Enter a Memetic address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
+        <source>Enter a PepeCoin address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
         <translation>ブラックコインアドレスの入力 (例；B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
     </message>
     <message>
@@ -1915,7 +1915,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+247"/>
-        <source>WARNING: Invalid Memetic address</source>
+        <source>WARNING: Invalid PepeCoin address</source>
         <translation>警告：無効なブラックコインアドレス</translation>
     </message>
     <message>
@@ -1989,7 +1989,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a Memetic address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
+        <source>Enter a PepeCoin address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
         <translation>ブラックコインアドレスの入力 (例；B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
     </message>
 </context>
@@ -2050,7 +2050,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this Memetic address</source>
+        <source>Sign the message to prove you own this PepeCoin address</source>
         <translation>所有権の証明するためこのメサッジを署名する</translation>
     </message>
     <message>
@@ -2082,7 +2082,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified Memetic address</source>
+        <source>Verify the message to ensure it was signed with the specified PepeCoin address</source>
         <translation>受け取ったメッセージの署名を確保のため、メッセージを確認する。</translation>
     </message>
     <message>
@@ -2093,7 +2093,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a Memetic address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
+        <source>Enter a PepeCoin address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
         <translation>ブラックコインのアドレスを入力(例：B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</translation>
     </message>
     <message>
@@ -2103,7 +2103,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter Memetic signature</source>
+        <source>Enter PepeCoin signature</source>
         <translation>ブラックコインのデジタル署名を入力</translation>
     </message>
     <message>
@@ -2682,7 +2682,7 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+173"/>
-        <source>Memetic version</source>
+        <source>PepeCoin version</source>
         <translation>ブラックコインバージョン</translation>
     </message>
     <message>
@@ -2692,8 +2692,8 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+1"/>
-        <source>Send command to -server or memeticd</source>
-        <translation>-server か memeticdへコマンドを送る。</translation>
+        <source>Send command to -server or pepecoind</source>
+        <translation>-server か pepecoindへコマンドを送る。</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2712,13 +2712,13 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
     </message>
     <message>
         <location line="+2"/>
-        <source>Specify configuration file (default: memetic.conf)</source>
-        <translation>設定ファイルを特定する (デファルト: memetic.conf)</translation>
+        <source>Specify configuration file (default: pepecoin.conf)</source>
+        <translation>設定ファイルを特定する (デファルト: pepecoin.conf)</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Specify pid file (default: memeticd.pid)</source>
-        <translation>pid ファイルを特定する (デフォルト: memeticd.pid)</translation>
+        <source>Specify pid file (default: pepecoind.pid)</source>
+        <translation>pid ファイルを特定する (デフォルト: pepecoind.pid)</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -2735,13 +2735,13 @@ This label turns red, if the priority is smaller than &quot;medium&quot;.
         <source>%s, you must set a rpcpassword in the configuration file:
 %s
 It is recommended you use the following random password:
-rpcuser=memeticrpc
+rpcuser=pepecoinrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;PepeCoin Alert&quot; admin@foo.com
 </source>
         <translation type="unfinished"/>
     </message>
@@ -2847,7 +2847,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="-103"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Memetic will not work properly.</source>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong PepeCoin will not work properly.</source>
         <translation> 警告：コンピュータの日付と時間を調べてください。時間ずらしかったばい、ブラックコイン QTは正しく行動しない。</translation>
     </message>
     <message>
@@ -3154,7 +3154,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+10"/>
-        <source>Initialization sanity check failed. Memetic is shutting down.</source>
+        <source>Initialization sanity check failed. PepeCoin is shutting down.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3219,12 +3219,12 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+4"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of Memetic</source>
+        <source>Error loading wallet.dat: Wallet requires newer version of PepeCoin</source>
         <translation>wallet.dat 読み込みエラー: 　ブラックコインQTの最新バージョンが必要です</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Wallet needed to be rewritten: restart Memetic to complete</source>
+        <source>Wallet needed to be rewritten: restart PepeCoin to complete</source>
         <translation>ウォレットのデータをリライトしなければならい：ブラックコインQTをリスタートしてください</translation>
     </message>
     <message>
@@ -3289,7 +3289,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+125"/>
-        <source>Unable to bind to %s on this computer. Memetic is probably already running.</source>
+        <source>Unable to bind to %s on this computer. PepeCoin is probably already running.</source>
         <translation>このコンピューターで%sに結ぶことができなかった。ブラックコインQTは、もう発行してるでしょう。</translation>
     </message>
     <message>
@@ -3329,7 +3329,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+3"/>
-        <source>Cannot obtain a lock on data directory %s. Memetic is probably already running.</source>
+        <source>Cannot obtain a lock on data directory %s. PepeCoin is probably already running.</source>
         <translation type="unfinished"/>
     </message>
     <message>

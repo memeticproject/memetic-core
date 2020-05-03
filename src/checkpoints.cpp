@@ -12,7 +12,7 @@
 #include "uint256.h"
 
 
-static const int nCheckpointSpan = 100;
+static int nCheckpointSpan = 100;
 
 namespace Checkpoints
 {
@@ -23,7 +23,7 @@ namespace Checkpoints
     // + Is surrounded by blocks with reasonable timestamps
     //   (no blocks before with a timestamp after, none after with
     //    timestamp before)
-    // + Contains no strange transactions
+    // + Contains no strange transactionsg
     //
     static MapCheckpoints mapCheckpoints =
         boost::assign::map_list_of
@@ -45,7 +45,38 @@ namespace Checkpoints
         (48398, uint256("0xdfe376d27cf8c6f11beaa29f4a3966f1011847b9af91ff81fbe69fc03178294b"))
         (71320, uint256("0x4298a1d06c0effb8a6f15205bb5e6d7c6ea3d6ef68a16a40ef9480c49a3cf212"))
         (219777, uint256("0xe9f0929405524b5a3b2888c392351c902a11b7a167b3e12d63720b62d344230f"))
-        
+        (333777, uint256("0x45bff45918baa567e50568a5e0218e9796b9ef8ea3bdb44e1e6c17f95e687542"))
+        (447777, uint256("0x307f3cb162219d6763439851f4c81ae6d0b867adccc97c6cc8d962b67f0de43a"))
+        (549333, uint256("0xfd66916698a7cb627b8187be3852b9df59d23a73e57d2e03eeee2da06a068bed"))   
+        (580500, uint256("0xe0dec5f9a0f267fabf46413c331b9a8fc36ddac260a09afa0d0ecbbc574efff6"))
+        (581777, uint256("0xf578368df2ca18fe517931d2a51c9cc2a6c5e00b168be4773786ce80e33ed47e"))     
+        (600000, uint256("0x69374e4dd79947ac885587b80a2730efef922772b01494885e95c533f415c46a"))
+        (736820, uint256("0x40beb7ceb66dd20e22854a77e020bc76bf401c92e3d1e455d711067ab0de0d81"))
+        (738522, uint256("0x8cfc6234f870351ab359a5f8d116af4e0203a50de8a111016f081902da2a782e"))
+        (746200, uint256("0xd5c3e2c2bf888cc9b3a594fafa8a67c8696bedb39daa2a28c475fe88b64d663f"))
+        (834600, uint256("0x0cd92f0d45ceb2c69c8d7845a584e69668cce098c01d3e1ec04af285afe2d378"))
+        (850000, uint256("0x010f9fd8aba13696829b5b6003770b8e947df06eaf507de592b4cc3bc9b04192"))
+        (885000, uint256("0x0fcb255ff69a157d13ff94bce583f2993b9bc1ed385ecb0d027c95b29c03b222"))
+        (889777, uint256("0x86a3ad3af9a93f4a5c5c6d5e020f1a323af4cd1d43fee72d6747177e71320d9e"))
+        (982877, uint256("0x5f2d4d7ab746a3373b82a45ec194d854688dff19b354038d71f410ed7bb15ea9"))
+        (984066, uint256("0x3497b6650d00fce42f448c1731327ad31616f073b4855331d4bc83923c11312a"))
+        (1034505, uint256("0x638a260d83c15e99959b08b1814cbf376136571900f8ba525c66deb8a8965167"))
+        (1090777, uint256("0x4c68bdbb07f106476bda8f98417c7ded56d26b8a46a4cd5d102e65076e63d293"))
+        (1118701, uint256("0x43481ac2839e6f4ab94d14d7fd683789d4f5a493cbef39f9cc7dcf9348163564"))
+        (1337777, uint256("0xd2d76e4321837506d5c399d69715a97e2fc7356e0f0f9ee809441077598fa64d"))
+        (1557775, uint256("0x24aa269659269c85ff8416e1bc475af3c91510c4669d826927b98a3cd50f965a"))
+        (1790400, uint256("0x0ce318476cf4676e2452c71c0c6b9570f73fc21a332b19b4a0bf6bc391a40f01"))
+        (1807255, uint256("0xc740d0099fee03a40f7af9a9696dbe64488c87222f2f392b35c180c16b83c0ca"))
+        (1814411, uint256("0x9b37845256869b5dfea201b702fb66ac3897a60b21c5982068ada1bf17617070"))
+        (1818757, uint256("0x4f2e5af91f2b310fc2011adc0a1e5a5efbdad86fb0548e286395f28c6a1babc7"))
+        (1819185, uint256("0x8db2c20395b399b4b684ded2bb536e9b13421d929955b94eb0f641dbbef8b034"))
+        (1828177, uint256("0x43c261b8d7df4726b529052ce9ea5c061af278692974873f9c0e77372f5dd33f"))
+        (1828220, uint256("0xae1f9c02bc61599db09fa61a6a9ca19d3dcbab7d29a6b9a6675a48bb0a9a5ad7"))
+        (1833222, uint256("0xdd9c82e950acd29943da35de27193c77ab7d1d7c2b60e1b9fb6625d6a300e470"))
+        (1839903, uint256("0x59154e986b1ddc7367b341ee6582818a4e7879fc9bb2f4c9a9eca036c29ab2f1"))
+        (2000077, uint256("0xc2f2b32dd89d51891c03565e54fcb9f3a40a35b193ce5c3f54c19c19672e6e49"))
+        (2239315, uint256("0xadd021fcc037bae4744397a95784534e40b7de3d6fbd4e55ffbec6e2aa566ed3"))
+        (2400777, uint256("0x4fed3c5bdd44ba97a2c0565bb41d59d1c8b68a6837dbca02c8a8be8ea2eebcfc"))    
     ;
 
     // TestNet has no checkpoints
@@ -86,6 +117,15 @@ namespace Checkpoints
     // Automatically select a suitable sync-checkpoint
     const CBlockIndex* AutoSelectSyncCheckpoint()
     {
+        // tighten automatic checkpointing to 10 blocks in past for reorg fix attempt
+        if (pindexBest->nHeight >= PEPE_JACKOLANTERN_FORK_HEIGHT)
+            nCheckpointSpan = 10;
+
+        // set autocheckpointing to 25 blocks max to limit forced resyncs
+        if (pindexBest->nHeight >= PEPE_STAKE_CONF_TWEAK)
+            nCheckpointSpan = 25;
+
+
         const CBlockIndex *pindex = pindexBest;
         // Search backward for a block within max span and maturity window
         while (pindex->pprev && pindex->nHeight + nCheckpointSpan > pindexBest->nHeight)

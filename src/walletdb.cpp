@@ -76,6 +76,23 @@ bool CWalletDB::ReadStealthAddress(CStealthAddress& sxAddr)
     return Read(std::make_pair(std::string("sxAddr"), sxAddr.scan_pubkey), sxAddr);
 }
 
+bool CWalletDB::WritemastertoadConfig(std::string sAlias, const CmastertoadConfig& nodeConfig)
+{
+    nWalletDBUpdated++;
+    return Write(std::make_pair(std::string("mastertoad"), sAlias), nodeConfig, true);
+}
+
+bool CWalletDB::ReadmastertoadConfig(std::string sAlias, CmastertoadConfig& nodeConfig)
+{
+    return Read(std::make_pair(std::string("mastertoad"), sAlias), nodeConfig);
+}
+
+bool CWalletDB::ErasemastertoadConfig(std::string sAlias)
+{
+    nWalletDBUpdated++;
+    return Erase(std::make_pair(std::string("mastertoad"), sAlias));
+}
+
 bool CWalletDB::WriteKey(const CPubKey& vchPubKey, const CPrivKey& vchPrivKey, const CKeyMetadata& keyMeta)
 {
     nWalletDBUpdated++;
@@ -199,7 +216,7 @@ bool CWalletDB::WriteAccountingEntry(const uint64_t nAccEntryNum, const CAccount
     return Write(boost::make_tuple(string("acentry"), acentry.strAccount, nAccEntryNum), acentry);
 }
 
-bool CWalletDB::WriteAccountingEntry(const CAccountingEntry& acentry)
+bool CWalletDB::WriteAccountingEntry_Backend(const CAccountingEntry& acentry)
 {
     return WriteAccountingEntry(++nAccountingEntryNumber, acentry);
 }
@@ -376,13 +393,8 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
             ssKey >> hash;
             CWalletTx& wtx = pwallet->mapWallet[hash];
             ssValue >> wtx;
-            if (wtx.CheckTransaction() && (wtx.GetHash() == hash))
-                wtx.BindWallet(pwallet);
-            else
-            {
-                pwallet->mapWallet.erase(hash);
+	    if (!(wtx.CheckTransaction() && (wtx.GetHash() == hash)))
                 return false;
-            }
 
             // Undo serialize changes in 31600
             if (31404 <= wtx.fTimeReceivedIsTxTime && wtx.fTimeReceivedIsTxTime <= 31703)
@@ -619,6 +631,14 @@ ReadKeyValue(CWallet* pwallet, CDataStream& ssKey, CDataStream& ssValue,
         {
             ssValue >> pwallet->nOrderPosNext;
         }
+        else if (strType == "mastertoad")
+        {
+            std::string sAlias;
+            ssKey >> sAlias;
+            CmastertoadConfig mastertoadConfig;
+            ssValue >> mastertoadConfig;
+            pwallet->mapMymastertoads.insert(make_pair(sAlias, mastertoadConfig));
+        }
     } catch (...)
     {
         return false;
@@ -737,7 +757,7 @@ DBErrors CWalletDB::LoadWallet(CWallet* pwallet)
 void ThreadFlushWalletDB(const string& strFile)
 {
     // Make this thread recognisable as the wallet flushing thread
-    RenameThread("memetic-wallet");
+    RenameThread("pepecoin-wallet");
 
     static bool fOneThread;
     if (fOneThread)

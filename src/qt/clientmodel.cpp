@@ -9,7 +9,7 @@
 #include "alert.h"
 #include "main.h"
 #include "ui_interface.h"
-#include "masternodeman.h"
+#include "masternode.h"
 
 #include <QDateTime>
 #include <QTimer>
@@ -46,7 +46,7 @@ int ClientModel::getNumConnections() const
 
 QString ClientModel::getMasternodeCountString() const
 {
-    return QString::number((int)mnodeman.CountEnabled()) + " / " + QString::number((int)mnodeman.size());
+    return "See nodes tab.";
 }
 
 int ClientModel::getNumBlocks() const

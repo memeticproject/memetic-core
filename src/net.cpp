@@ -12,6 +12,7 @@
 #include "ui_interface.h"
 #include "darksend.h"
 #include "wallet.h"
+#include "serialize.h"
 
 #ifdef WIN32
 #include <string.h>
@@ -30,7 +31,9 @@
 using namespace std;
 using namespace boost;
 
-static const int MAX_OUTBOUND_CONNECTIONS = 8;
+unsigned int nMessageCores = 0;
+
+static const int MAX_OUTBOUND_CONNECTIONS = 10;
 
 bool OpenNetworkConnection(const CAddress& addrConnect, CSemaphoreGrant *grantOutbound = NULL, const char *strDest = NULL, bool fOneShot = false);
 
@@ -136,10 +139,12 @@ CAddress GetLocalAddress(const CNetAddr *paddrPeer)
 bool RecvLine(SOCKET hSocket, string& strLine)
 {
     strLine = "";
-    while (true)
+    while (!ShutdownRequested())
     {
         char c;
-		int nBytes = recv(hSocket, &c, 1, 0);
+        int nBytes = recv(hSocket, &c, 1, MSG_DONTWAIT);
+        if(ShutdownRequested())
+            return false;
 
         if (nBytes > 0)
         {
@@ -177,7 +182,7 @@ bool RecvLine(SOCKET hSocket, string& strLine)
             {
                 // socket error
                 int nErr = WSAGetLastError();
-                LogPrint("net", "recv failed: %s\n", nErr);
+                LogPrint("net", "recv failed: %d\n", nErr);
                 return false;
             }
         }
@@ -200,21 +205,23 @@ bool IsPeerAddrLocalGood(CNode *pnode)
            !IsLimited(pnode->addrLocal.GetNetwork());
 }
 
-// used when scores of local addresses may have changed
-// pushes better local address to peers
-void static AdvertizeLocal()
+// pushes our own address to a peer
+void AdvertizeLocal(CNode *pnode)
 {
-    LOCK(cs_vNodes);
-    BOOST_FOREACH(CNode* pnode, vNodes)
+    if (!fNoListen && pnode->fSuccessfullyConnected)
     {
-		if (pnode->fSuccessfullyConnected)
+        CAddress addrLocal = GetLocalAddress(&pnode->addr);
+        // If discovery is enabled, sometimes give our peer the address it
+        // tells us that it sees us as in case it has a better idea of our
+        // address than we do.
+        if (IsPeerAddrLocalGood(pnode) && (!addrLocal.IsRoutable() ||
+             GetRand((GetnScore(addrLocal) > LOCAL_MANUAL) ? 8:2) == 0))
         {
-            CAddress addrLocal = GetLocalAddress(&pnode->addr);
-            if (addrLocal.IsRoutable() && (CService)addrLocal != (CService)pnode->addrLocal)
-            {
-                pnode->PushAddress(addrLocal);
-                pnode->addrLocal = addrLocal;
-            }
+            addrLocal.SetIP(pnode->addrLocal);
+        }
+        if (addrLocal.IsRoutable())
+        {
+            pnode->PushAddress(addrLocal);
         }
     }
 }
@@ -251,8 +258,6 @@ bool AddLocal(const CService& addr, int nScore)
         }
         SetReachable(addr.GetNetwork());
     }
-
-    AdvertizeLocal();
 
     return true;
 }
@@ -291,9 +296,6 @@ bool SeenLocal(const CService& addr)
             return false;
         mapLocalHost[addr].nScore++;
     }
-
-    AdvertizeLocal();
-
     return true;
 }
 
@@ -365,8 +367,8 @@ CNode* ConnectNode(CAddress addrConnect, const char *pszDest, bool darkSendMaste
         CNode* pnode = FindNode((CService)addrConnect);
         if (pnode)
         {
-	    if(darkSendMaster)
-                pnode->fDarkSendMaster = true;
+            if(darkSendMaster)
+                    pnode->fDarkSendMaster = true;
 
             pnode->AddRef();
             return pnode;
@@ -430,6 +432,7 @@ void CNode::CloseSocketDisconnect()
     }
 
     // in case this fails, we'll empty the recv buffer when the CNode is deleted
+    LogPrint("net", "CloseSocketDisconnect: Try lock cs_vRecvMsg\n");
     TRY_LOCK(cs_vRecvMsg, lockRecv);
     if (lockRecv)
         vRecvMsg.clear();
@@ -437,6 +440,8 @@ void CNode::CloseSocketDisconnect()
     // if this was the sync node, we'll need a new one
     if (this == pnodeSync)
         pnodeSync = NULL;
+
+    LogPrint("net", "CloseSocketDisconnect: done.\n");
 }
 
 void CNode::PushVersion()
@@ -445,10 +450,10 @@ void CNode::PushVersion()
     int64_t nTime = (fInbound ? GetAdjustedTime() : GetTime());
     CAddress addrYou = (addr.IsRoutable() && !IsProxy(addr) ? addr : CAddress(CService("0.0.0.0",0)));
     CAddress addrMe = GetLocalAddress(&addr);
-    GetRandBytes((unsigned char*)&nLocalHostNonce, sizeof(nLocalHostNonce));
+    RAND_bytes((unsigned char*)&nLocalHostNonce, sizeof(nLocalHostNonce));
     LogPrint("net", "send version message: version %d, blocks=%d, us=%s, them=%s, peer=%s\n", PROTOCOL_VERSION, nBestHeight, addrMe.ToString(), addrYou.ToString(), addr.ToString());
     PushMessage("version", PROTOCOL_VERSION, nLocalServices, nTime, addrYou, addrMe,
-                nLocalHostNonce, FormatSubVersion(CLIENT_NAME, CLIENT_VERSION, std::vector<string>()), nBestHeight);
+                nLocalHostNonce, FormatSubVersion(CLIENT_NAME, CLIENT_VERSION, std::vector<string>()), nBestHeight, true);
 }
 
 
@@ -488,9 +493,9 @@ bool CNode::Misbehaving(int howmuch)
     }
 
     nMisbehavior += howmuch;
-    if (nMisbehavior >= GetArg("-banscore", 100))
+    if (nMisbehavior >= GetArg("-banscore", 30))
     {
-        int64_t banTime = GetTime()+GetArg("-bantime", 60*60*24);  // Default 24-hour ban
+        int64_t banTime = GetTime()+GetArg("-bantime", 60*60*48);  // Default 24-hour ban
         LogPrintf("Misbehaving: %s (%d -> %d) DISCONNECTING\n", addr.ToString(), nMisbehavior-howmuch, nMisbehavior);
         {
             LOCK(cs_setBanned);
@@ -522,10 +527,10 @@ void CNode::copyStats(CNodeStats &stats)
     X(nMisbehavior);
     X(nSendBytes);
     X(nRecvBytes);
-    stats.fSyncNode = (this == pnodeSync);
+    stats.fSyncNode = (this == pnodeSync);   
 
     // It is common for nodes with good ping times to suddenly become lagged,
-    // due to a new block arriving or other large memetic.
+    // due to a new block arriving or other large transfer.
     // Merely reporting pingtime might fool the caller into thinking the node was still responsive,
     // since pingtime does not update until the ping is complete, which might take a while.
     // So, if a ping is taking an unusually long time in flight,
@@ -538,7 +543,7 @@ void CNode::copyStats(CNodeStats &stats)
     // Raw ping time is in microseconds, but show it to user as whole seconds (Bitcoin users should be well used to small numbers with many decimal places by now :)
     stats.dPingTime = (((double)nPingUsecTime) / 1e6);
     stats.dPingWait = (((double)nPingUsecWait) / 1e6);
-
+    
     // Leave string empty if addrLocal invalid (not filled in yet)
     stats.addrLocal = addrLocal.IsValid() ? addrLocal.ToString() : "";
 }
@@ -553,7 +558,7 @@ bool CNode::ReceiveMsgBytes(const char *pch, unsigned int nBytes)
         if (vRecvMsg.empty() ||
             vRecvMsg.back().complete())
             vRecvMsg.push_back(CNetMessage(SER_NETWORK, nRecvVersion));
-
+            
         CNetMessage& msg = vRecvMsg.back();
 
         // absorb network data
@@ -736,7 +741,6 @@ void ThreadSocketHandler()
                     if (fDelete)
                     {
                         vNodesDisconnected.remove(pnode);
-                        delete pnode;
                     }
                 }
             }
@@ -763,6 +767,8 @@ void ThreadSocketHandler()
         SOCKET hSocketMax = 0;
         bool have_fds = false;
 
+
+
         BOOST_FOREACH(SOCKET hListenSocket, vhListenSocket) {
             FD_SET(hListenSocket, &fdsetRecv);
             hSocketMax = max(hSocketMax, hListenSocket);
@@ -772,6 +778,8 @@ void ThreadSocketHandler()
             LOCK(cs_vNodes);
             BOOST_FOREACH(CNode* pnode, vNodes)
             {
+                if(!pnode) continue;
+
                 if (pnode->hSocket == INVALID_SOCKET)
                     continue;
                 {
@@ -831,14 +839,19 @@ void ThreadSocketHandler()
                     if (pnode->fInbound)
                         nInbound++;
             }
-			int nMaxOutbound = min(MAX_OUTBOUND_CONNECTIONS, (int)GetArg("-maxconnections", 25));
+
             if (hSocket == INVALID_SOCKET)
             {
                 int nErr = WSAGetLastError();
                 if (nErr != WSAEWOULDBLOCK)
                     LogPrintf("socket error accept failed: %d\n", nErr);
             }
-            else if (nInbound >= nMaxOutbound)
+            else if(IsSyncing())
+            {
+                closesocket(hSocket);
+                LogPrintf("Inbound connection from %s dropped because we are syncing.\n");
+            }
+            else if (nInbound >= GetArg("-maxconnections", 125) - MAX_OUTBOUND_CONNECTIONS)
             {
                 closesocket(hSocket);
             }
@@ -851,6 +864,7 @@ void ThreadSocketHandler()
             {
                 LogPrint("net", "accepted connection %s\n", addr.ToString());
                 CNode* pnode = new CNode(hSocket, addr, "", true);
+                
                 pnode->AddRef();
                 {
                     LOCK(cs_vNodes);
@@ -860,19 +874,28 @@ void ThreadSocketHandler()
         }
 
 
+
         //
         // Service each socket
         //
         vector<CNode*> vNodesCopy;
         {
-            LOCK(cs_vNodes);
-            vNodesCopy = vNodes;
+            {
+                LOCK(cs_vNodes);
+                vNodesCopy = vNodes;
+            }
+
             BOOST_FOREACH(CNode* pnode, vNodesCopy)
+            {
+                if(!pnode) continue;
+                
                 pnode->AddRef();
+            }
         }
         BOOST_FOREACH(CNode* pnode, vNodesCopy)
         {
             boost::this_thread::interruption_point();
+            if(!pnode) continue;
 
             //
             // Receive
@@ -932,7 +955,9 @@ void ThreadSocketHandler()
             {
                 TRY_LOCK(pnode->cs_vSend, lockSend);
                 if (lockSend)
+                {
                     SocketSendData(pnode);
+                }
             }
 
             //
@@ -964,10 +989,14 @@ void ThreadSocketHandler()
             }
         }
         {
-            LOCK(cs_vNodes);
+            //LOCK(cs_vNodes);
             BOOST_FOREACH(CNode* pnode, vNodesCopy)
+            {
+                if(!pnode) continue;
                 pnode->Release();
+            }
         }
+    MilliSleep(1); // niceness
     }
 }
 
@@ -989,15 +1018,12 @@ void ThreadMapPort()
     char lanaddr[64];
 
 #ifndef UPNPDISCOVER_SUCCESS
-    
+    /* miniupnpc 1.5 */
+    devlist = upnpDiscover(2000, multicastif, minissdpdpath, 0);
+#else
+    /* miniupnpc 1.6 */
     int error = 0;
     devlist = upnpDiscover(2000, multicastif, minissdpdpath, 0, 0, &error);
-    /* 
-    //miniupnpc reverted to former function syntax
-    #else
-    int error = 0;
-    devlist = upnpDiscover(2000, multicastif, minissdpdpath, 0, 0, 2, &error);
-    */
 #endif
 
     struct UPNPUrls urls;
@@ -1024,11 +1050,11 @@ void ThreadMapPort()
             }
         }
 
-        string strDesc = "Memetic " + FormatFullVersion();
+        string strDesc = "PepeCoin " + FormatFullVersion();
 
         try {
           while (!ShutdownRequested()) {
-		boost::this_thread::interruption_point();
+        boost::this_thread::interruption_point();
 
 #ifndef UPNPDISCOVER_SUCCESS
                 /* miniupnpc 1.5 */
@@ -1102,11 +1128,11 @@ void ThreadDNSAddressSeed()
 {
     // goal: only query DNS seeds if address need is acute
     if ((addrman.size() > 0) &&
-        (!GetBoolArg("-forcednsseed", false))) {
+        (!GetBoolArg("-forcednsseed", true))) {
         MilliSleep(11 * 1000);
 
         LOCK(cs_vNodes);
-        if (vNodes.size() >= 2) {
+        if (vNodes.size() >= 4) {
             LogPrintf("P2P peers available. Skipped DNS seeding.\n");
             return;
         }
@@ -1287,6 +1313,7 @@ void ThreadOpenAddedConnections()
 
     if (HaveNameProxy()) {
         while(true) {
+            boost::this_thread::interruption_point();
             list<string> lAddresses(0);
             {
                 LOCK(cs_vAddedNodes);
@@ -1305,6 +1332,7 @@ void ThreadOpenAddedConnections()
 
     for (unsigned int i = 0; true; i++)
     {
+        boost::this_thread::interruption_point();
         list<string> lAddresses(0);
         {
             LOCK(cs_vAddedNodes);
@@ -1342,10 +1370,12 @@ void ThreadOpenAddedConnections()
         }
         BOOST_FOREACH(vector<CService>& vserv, lservAddressesToAdd)
         {
+            boost::this_thread::interruption_point();
             CSemaphoreGrant grant(*semOutbound);
             OpenNetworkConnection(CAddress(vserv[i % vserv.size()]), &grant);
             MilliSleep(500);
         }
+        boost::this_thread::interruption_point();
         MilliSleep(120000); // Retry every 2 minutes
     }
 }
@@ -1363,6 +1393,22 @@ bool OpenNetworkConnection(const CAddress& addrConnect, CSemaphoreGrant *grantOu
             FindNode(addrConnect.ToStringIPPort().c_str()))
             return false;
     if (strDest && FindNode(strDest))
+        return false;
+
+    // if we are trying to sync but the sync peer hasn't responded and started the sync
+    // drop it so we can open a connection to a new sync peer
+    DropNonRespondingSyncPeer();
+
+    // if we are syncing and if we already have an active sync node, don't open more connections
+    bool bAlreadySyncing = false;
+    BOOST_FOREACH(CNode* pnode, vNodes) {
+        if(pnode->fStartSync && !pnode->fDisconnect && IsSyncing())
+        {
+            bAlreadySyncing = true;
+            break;
+        }
+    }
+    if(bAlreadySyncing)
         return false;
 
     CNode* pnode = ConnectNode(addrConnect, strDest);
@@ -1397,10 +1443,12 @@ void static StartSync(const vector<CNode*> &vNodes) {
 
     // Iterate over all nodes
     BOOST_FOREACH(CNode* pnode, vNodes) {
+        if(!pnode) continue; 
+
         // check preconditions for allowing a sync
         if (!pnode->fClient && !pnode->fOneShot &&
             !pnode->fDisconnect && pnode->fSuccessfullyConnected &&
-            (pnode->nStartingHeight > (nBestHeight - 144)) &&
+            (pnode->nStartingHeight > nBestHeight) &&
             (pnode->nVersion < NOBLKS_VERSION_START || pnode->nVersion >= NOBLKS_VERSION_END)) {
             // if ok, compare node's score with the best so far
             int64_t nScore = NodeSyncScore(pnode);
@@ -1417,36 +1465,143 @@ void static StartSync(const vector<CNode*> &vNodes) {
     }
 }
 
-void ThreadMessageHandler()
+void ThreadMessageHandler(int ncore)
 {
-    SetThreadPriority(THREAD_PRIORITY_BELOW_NORMAL);
+    // Make this thread recognisable as a message handling thread
+    std::string s = strprintf("pepe-msghnd-%d", ncore);
+    RenameThread(s.c_str());  
+
+    std::vector<CNode*> vCoreNodes;
+
     while (true)
     {
+        boost::this_thread::interruption_point();
         bool fHaveSyncNode = false;
 
-        vector<CNode*> vNodesCopy;
+        vector<CNode*> vNodesFullSet; // the full set of nodes
+        vector<CNode*> vNodesCopy; // nodes to work on in this core
         {
-            LOCK(cs_vNodes);
-            vNodesCopy = vNodes;
-            BOOST_FOREACH(CNode* pnode, vNodesCopy) {
+            {
+                LOCK(cs_vNodes);
+                vNodesFullSet = vNodes;
+            }
+
+            // figure out the start and end indexes for this core to work on
+            if(vNodesFullSet.size() < ncore+1)
+            {
+                // the size is less than our core number, e.g. the size is 3 but we are core 4
+                // therefore we have nothing to work on, so sleep and then continue and look for work again
+                LogPrint("multicore", "ThreadMessageHandler: core %d no nodes for us to service nodes size %d\n", ncore, vNodesFullSet.size());
+                MilliSleep(500);
+                continue;
+            }
+
+            int nSliceSize = 0;
+
+            if(vNodesFullSet.size() <= nMessageCores)
+            {
+                // the number of nodes is equal to or less than the total number of cores
+                // but not less than our core number
+                // which means we only have 1 node to work on
+                nSliceSize = 1;
+            }
+            else
+            {
+                // there are more nodes than total number of cores
+                // therefore split up the work across cores an equal amount
+                // with whatever is leftover tacked onto the last core
+                nSliceSize = vNodesFullSet.size() / nMessageCores;
+
+                // load up the remainder on the last core because its easy
+                if( (ncore+1) == nMessageCores )
+                {
+                    // ex. 8 cores, 14 total nodes, slice size 1, core 8 should handle 6
+                    // ex. 8 cores, 16 total nodes, slice size 2, no remainder
+                    // ex. 8 cores, 18 total nodes, slice size 2, core 8 should handle 4
+                    
+                    // 16        =     8          *    2
+                    int nHandled = nMessageCores * nSliceSize;
+                    if(vNodesFullSet.size() % nMessageCores > 0)
+                    {
+                        // there is a remainder
+                        //    2    +=       18             -   16    == 4
+                        nSliceSize += vNodesFullSet.size() - nHandled;
+                    }
+                }
+            }
+
+            {
+                LOCK(cs_vNodes);
+                // clean our node list of any nodes that have been disconnected and don't exist in the master node list anymore
+                std::vector<CNode*> vCoreNodesToRemove; 
+                BOOST_FOREACH(CNode* pnode, vCoreNodes)
+                {
+                    if(!pnode)
+                        vCoreNodesToRemove.push_back(pnode);
+
+                    if(std::find(vNodesFullSet.begin(), vNodesFullSet.end(), pnode) == vNodesFullSet.end())
+                        vCoreNodesToRemove.push_back(pnode);   
+                }
+                BOOST_FOREACH(CNode* pnode, vCoreNodesToRemove)
+                {
+                    vCoreNodes.erase(remove(vCoreNodes.begin(), vCoreNodes.end(), pnode), vCoreNodes.end());
+                }
+            }
+
+            // the slice size tells us how many nodes this core is supposed to work on
+            if(vCoreNodes.size() < nSliceSize)
+            {
+                int nNodesToClaim = nSliceSize - vCoreNodes.size();
+
+                // claim nodes for this core until the slice size is reached
+                int d = 0;
+                BOOST_FOREACH(CNode* pnode, vNodesFullSet)
+                {
+                    if(!pnode) continue;  
+
+                    if(d == nNodesToClaim) // we reached how many we need
+                        break;
+
+                    if(!pnode->fDisconnect && pnode->ncore < 0)
+                    {
+                        pnode->ncore = ncore;
+                        vCoreNodes.push_back(pnode);
+                        d++;
+                    }
+                }
+            }
+
+            LogPrint("multicore","ThreadMessageHandler: core %d nSlizeSize: %d vCoreNodes size: %d vNodesFullSet size: %d\n", ncore, nSliceSize, vCoreNodes.size(), vNodesFullSet.size());
+
+            BOOST_FOREACH(CNode* pnode, vCoreNodes) {
+                LogPrint("multicore", "ThreadMessageHandler: core: %d pnode->ncore: %d\n", ncore, pnode->ncore);
+                if(!pnode) continue;
                 pnode->AddRef();
                 if (pnode == pnodeSync)
                     fHaveSyncNode = true;
             }
+
+            BOOST_FOREACH(CNode* pnode, vNodesFullSet) {
+                if(!pnode) continue;
+
+                if(pnode == pnodeSync)
+                    fHaveSyncNode = true;
+            } 
         }
 
-        if (!fHaveSyncNode)
-            StartSync(vNodesCopy);
+        if (!fHaveSyncNode && IsSyncing())
+            StartSync(vCoreNodes);
 
         // Poll the connected nodes for messages
         CNode* pnodeTrickle = NULL;
-        if (!vNodesCopy.empty())
-            pnodeTrickle = vNodesCopy[GetRand(vNodesCopy.size())];
+        if (!vCoreNodes.empty())
+            pnodeTrickle = vNodesCopy[GetRand(vCoreNodes.size())];
 
-        bool fSleep = true;
-
-        BOOST_FOREACH(CNode* pnode, vNodesCopy)
+        
+        BOOST_FOREACH(CNode* pnode, vCoreNodes)
         {
+            if(!pnode) continue; 
+
             if (pnode->fDisconnect)
                 continue;
 
@@ -1455,16 +1610,7 @@ void ThreadMessageHandler()
                 TRY_LOCK(pnode->cs_vRecvMsg, lockRecv);
                 if (lockRecv)
                 {
-                    if (!g_signals.ProcessMessages(pnode))
-                        pnode->CloseSocketDisconnect();
-
-                    if (pnode->nSendSize < SendBufferSize())
-                    {
-                        if (!pnode->vRecvGetData.empty() || (!pnode->vRecvMsg.empty() && pnode->vRecvMsg[0].complete()))
-                        {
-                            fSleep = false;
-                        }
-                    }
+                    ProcessMessages(pnode);
                 }
             }
             boost::this_thread::interruption_point();
@@ -1473,26 +1619,23 @@ void ThreadMessageHandler()
             {
                 TRY_LOCK(pnode->cs_vSend, lockSend);
                 if (lockSend)
-                    g_signals.SendMessages(pnode, pnode == pnodeTrickle);
+                    SendMessages(pnode, false); //pnode == pnodeTrickle);
             }
             boost::this_thread::interruption_point();
         }
 
         {
-            LOCK(cs_vNodes);
-            BOOST_FOREACH(CNode* pnode, vNodesCopy)
-                pnode->Release();
+                BOOST_FOREACH(CNode* pnode, vCoreNodes)
+                {
+                    if(!pnode) continue;
+                    pnode->Release();
+                }
         }
 
-        if (fSleep)
-            MilliSleep(100);
+        // niceness
+        MilliSleep(2);
     }
 }
-
-
-
-
-
 
 bool BindListenPort(const CService &addrBind, string& strError)
 {
@@ -1575,7 +1718,7 @@ bool BindListenPort(const CService &addrBind, string& strError)
     {
         int nErr = WSAGetLastError();
         if (nErr == WSAEADDRINUSE)
-            strError = strprintf(_("Unable to bind to %s on this computer. Memetic is probably already running."), addrBind.ToString());
+            strError = strprintf(_("Unable to bind to %s on this computer. PepeCoin is probably already running."), addrBind.ToString());
         else
             strError = strprintf(_("Unable to bind to %s on this computer (bind returned error %d, %s)"), addrBind.ToString(), nErr, strerror(nErr));
         LogPrintf("%s\n", strError);
@@ -1654,7 +1797,7 @@ void StartNode(boost::thread_group& threadGroup)
 {
     if (semOutbound == NULL) {
         // initialize semaphore
-        int nMaxOutbound = min(MAX_OUTBOUND_CONNECTIONS, (int)GetArg("-maxconnections", 25));
+        int nMaxOutbound = min(MAX_OUTBOUND_CONNECTIONS, (int)GetArg("-maxconnections", 125));
         semOutbound = new CSemaphore(nMaxOutbound);
     }
 
@@ -1687,7 +1830,23 @@ void StartNode(boost::thread_group& threadGroup)
     threadGroup.create_thread(boost::bind(&TraceThread<void (*)()>, "opencon", &ThreadOpenConnections));
 
     // Process messages
-    threadGroup.create_thread(boost::bind(&TraceThread<void (*)()>, "msghand", &ThreadMessageHandler));
+    unsigned int nmsgthreads = boost::thread::hardware_concurrency();
+    unsigned int nMessagecorelimit = GetArg("-messagecorelimit", 1);
+    if(nMessagecorelimit < nmsgthreads)
+    {
+        nMessageCores = nMessagecorelimit;
+    }
+    else
+        nMessageCores = nmsgthreads;
+
+    for(int c=0;c<nMessageCores;c++)
+    {
+        LogPrintf("Init: Starting message handler thread for core %d/%d\n", c+1, nMessageCores);
+        threadGroup.create_thread(boost::bind(&ThreadMessageHandler, c));
+        MilliSleep(100 + c);
+
+        //threadGroup.create_thread(boost::bind(&TraceThread<void (*)()>, "msghand", &ThreadMessageHandler));
+    }
 
     // Dump network addresses
     threadGroup.create_thread(boost::bind(&LoopForever<void (*)()>, "dumpaddr", &DumpAddresses, DUMP_ADDRESSES_INTERVAL * 1000));
@@ -1722,6 +1881,7 @@ public:
                 if (closesocket(hListenSocket) == SOCKET_ERROR)
                     LogPrintf("closesocket(hListenSocket) failed with error %d\n", WSAGetLastError());
 
+
 #ifdef WIN32
         // Shutdown Windows Sockets
         WSACleanup();
@@ -1751,14 +1911,15 @@ void RelayTransaction(const CTransaction& tx, const uint256& hash, const CDataSt
         }
 
         // Save original serialized message so newer versions are preserved
+        int nTransactionExpiration = GetArg("-txrelayexpiration", 180);
         mapRelay.insert(std::make_pair(inv, ss));
-        vRelayExpiration.push_back(std::make_pair(GetTime() + 15 * 60, inv));
+        vRelayExpiration.push_back(std::make_pair(GetTime() + nTransactionExpiration * 60, inv));
     }
 
     RelayInventory(inv);
 }
 
-void RelayTransactionLockReq(const CTransaction& tx, bool relayToAll)
+void RelayTransactionLockReq(const CTransaction& tx, const uint256& hash, bool relayToAll)
 {
     CInv inv(MSG_TXLOCK_REQUEST, tx.GetHash());
 
@@ -1773,6 +1934,114 @@ void RelayTransactionLockReq(const CTransaction& tx, bool relayToAll)
     }
 
 }
+
+void RelayDarkSendFinalTransaction(const int sessionID, const CTransaction& txNew)
+{
+    LOCK(cs_vNodes);
+    BOOST_FOREACH(CNode* pnode, vNodes)
+    {
+        pnode->PushMessage("dsf", sessionID, txNew);
+    }
+}
+
+void RelayDarkSendIn(const std::vector<CTxIn>& in, const int64_t& nAmount, const CTransaction& txCollateral, const std::vector<CTxOut>& out)
+{
+    LOCK(cs_vNodes);
+
+    BOOST_FOREACH(CNode* pnode, vNodes)
+    {
+        if((CNetAddr)darkSendPool.submittedToMasternode != (CNetAddr)pnode->addr) continue;
+        LogPrintf("RelayDarkSendIn - found master, relaying message - %s \n", pnode->addr.ToString().c_str());
+        pnode->PushMessage("dsi", in, nAmount, txCollateral, out);
+    }
+}
+
+void RelayDarkSendStatus(const int sessionID, const int newState, const int newEntriesCount, const int newAccepted, const std::string error)
+{
+    LOCK(cs_vNodes);
+    BOOST_FOREACH(CNode* pnode, vNodes)
+    {
+        pnode->PushMessage("dssu", sessionID, newState, newEntriesCount, newAccepted, error);
+    }
+}
+
+void RelayDarkSendElectionEntry(const CTxIn vin, const CService addr, const std::vector<unsigned char> vchSig, const int64_t nNow, const CPubKey pubkey, const CPubKey pubkey2, const int count, const int current, const int64_t lastUpdated, const int protocolVersion)
+{
+    CDataStream ssCheck(SER_GETHASH, PROTOCOL_VERSION);
+    ssCheck << CMessageHeader("dsee",0) << vin << addr << vchSig << nNow << pubkey << pubkey2 << count << current << lastUpdated << protocolVersion;
+    uint256 hashCheck = SerializeHash(std::vector<unsigned char>(ssCheck.begin(), ssCheck.end()));
+
+    LOCK(cs_vNodes);
+    BOOST_FOREACH(CNode* pnode, vNodes)
+    {
+        if(!pnode->fRelayTxes) continue;
+        if(pnode->setToadKnown.count(hashCheck) != 0) continue;
+
+        pnode->setToadKnown.insert(hashCheck);
+        pnode->PushMessage("dsee", vin, addr, vchSig, nNow, pubkey, pubkey2, count, current, lastUpdated, protocolVersion);
+    }
+}
+
+void SendDarkSendElectionEntry(const CTxIn vin, const CService addr, const std::vector<unsigned char> vchSig, const int64_t nNow, const CPubKey pubkey, const CPubKey pubkey2, const int count, const int current, const int64_t lastUpdated, const int protocolVersion)
+{
+    CDataStream ssCheck(SER_GETHASH, PROTOCOL_VERSION);
+    ssCheck << CMessageHeader("dsee",0) << vin << addr << vchSig << nNow << pubkey << pubkey2 << count << current << lastUpdated << protocolVersion;
+    uint256 hashCheck = SerializeHash(std::vector<unsigned char>(ssCheck.begin(), ssCheck.end()));
+
+    LOCK(cs_vNodes);
+    BOOST_FOREACH(CNode* pnode, vNodes)
+    {
+        if(!pnode->fRelayTxes) continue;
+        if(pnode->setToadKnown.count(hashCheck) != 0) continue;
+
+        pnode->setToadKnown.insert(hashCheck);
+        pnode->PushMessage("dsee", vin, addr, vchSig, nNow, pubkey, pubkey2, count, current, lastUpdated, protocolVersion);
+    }
+}
+
+void RelayDarkSendElectionEntryPing(const CTxIn vin, const std::vector<unsigned char> vchSig, const int64_t nNow, const bool stop)
+{
+    CDataStream ssCheck(SER_GETHASH, PROTOCOL_VERSION);
+    ssCheck << CMessageHeader("dseep",0) << vin << vchSig << nNow << stop;
+    uint256 hashCheck = SerializeHash(std::vector<unsigned char>(ssCheck.begin(), ssCheck.end()));
+
+    LOCK(cs_vNodes);
+    BOOST_FOREACH(CNode* pnode, vNodes)
+    {
+        if(!pnode->fRelayTxes) continue;
+        if(pnode->setToadKnown.count(hashCheck) != 0) continue;
+
+        pnode->setToadKnown.insert(hashCheck);
+        pnode->PushMessage("dseep", vin, vchSig, nNow, stop);
+    }
+}
+
+void SendDarkSendElectionEntryPing(const CTxIn vin, const std::vector<unsigned char> vchSig, const int64_t nNow, const bool stop)
+{
+    CDataStream ssCheck(SER_GETHASH, PROTOCOL_VERSION);
+    ssCheck << CMessageHeader("dseep",0) << vin << vchSig << nNow << stop;
+    uint256 hashCheck = SerializeHash(std::vector<unsigned char>(ssCheck.begin(), ssCheck.end()));
+
+    LOCK(cs_vNodes);
+    BOOST_FOREACH(CNode* pnode, vNodes)
+    {
+        if(!pnode->fRelayTxes) continue;
+        if(pnode->setToadKnown.count(hashCheck) != 0) continue;
+
+        pnode->setToadKnown.insert(hashCheck);
+        pnode->PushMessage("dseep", vin, vchSig, nNow, stop);
+    }
+}
+
+void RelayDarkSendCompletedTransaction(const int sessionID, const bool error, const std::string errorMessage)
+{
+    LOCK(cs_vNodes);
+    BOOST_FOREACH(CNode* pnode, vNodes)
+    {
+        pnode->PushMessage("dsc", sessionID, error, errorMessage);
+    }
+}
+
 
 void CNode::RecordBytesRecv(uint64_t bytes)
 {
@@ -1811,7 +2080,7 @@ bool CAddrDB::Write(const CAddrMan& addr)
 {
     // Generate random temporary filename
     unsigned short randv = 0;
-    GetRandBytes((unsigned char *)&randv, sizeof(randv));
+    RAND_bytes((unsigned char *)&randv, sizeof(randv));
     std::string tmpfn = strprintf("peers.dat.%04x", randv);
 
     // serialize addresses, checksum data up to that point, then append csum

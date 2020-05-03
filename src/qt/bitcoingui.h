@@ -22,6 +22,7 @@ class MessageModel;
 class BlockBrowser;
 class tradingDialog;
 class ProofOfMeme;
+class MasternodeManager;
 
 QT_BEGIN_NAMESPACE
 class QLabel;
@@ -78,6 +79,7 @@ private:
     AddressBookPage *receiveCoinsPage;
     SendCoinsDialog *sendCoinsPage;
     SignVerifyMessageDialog *signVerifyMessageDialog;
+    MasternodeManager *masternodeManagerPage;
     
     MessagePage *messagePage;
     QLabel* netLabel;
@@ -112,6 +114,7 @@ private:
     QAction *lockWalletAction;
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
+    QAction *masternodeManagerAction;
     
     QAction *messageAction;
     QAction *blockAction;
@@ -189,6 +192,7 @@ private slots:
     /** Switch to block explorer*/
     void gotoBlockBrowser();
     void gotoProofOfMemePage();
+    void gotoMasternodeManagerPage();
     
     /** Show Sign/Verify Message dialog and switch to sign message tab */
     void gotoSignMessageTab(QString addr = "");

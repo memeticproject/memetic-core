@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = memetic-qt
+TARGET = pepecoin-qt
 VERSION = 2.0.0.1
 INCLUDEPATH += src src/json src/qt src/qt/plugins/mrichtexteditor
 QT += network printsupport
@@ -287,8 +287,8 @@ HEADERS += src/qt/bitcoingui.h \
     src/crypto/sha256.h \
     src/crypto/sha512.h \
     src/qt/masternodemanager.h \
-    src/qt/addeditadrenalinenode.h \
-    src/qt/adrenalinenodeconfigdialog.h \
+    src/qt/addeditmastertoad.h \
+    src/qt/mastertoadconfigdialog.h \
     src/qt/qcustomplot.h \
     src/smessage.h \
     src/qt/messagepage.h \
@@ -413,8 +413,8 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/crypto/sha256.cpp \
     src/crypto/sha512.cpp \
     src/qt/masternodemanager.cpp \
-    src/qt/addeditadrenalinenode.cpp \
-    src/qt/adrenalinenodeconfigdialog.cpp \
+    src/qt/addeditmastertoad.cpp \
+    src/qt/mastertoadconfigdialog.cpp \
     src/qt/qcustomplot.cpp \
     src/smessage.cpp \
     src/qt/messagepage.cpp \
@@ -456,8 +456,8 @@ FORMS += \
     src/qt/forms/optionsdialog.ui \
     src/qt/forms/darksendconfig.ui \
     src/qt/forms/masternodemanager.ui \
-    src/qt/forms/addeditadrenalinenode.ui \
-    src/qt/forms/adrenalinenodeconfigdialog.ui \
+    src/qt/forms/addeditmastertoad.ui \
+    src/qt/forms/mastertoadconfigdialog.ui \
     src/qt/forms/messagepage.ui \
     src/qt/forms/sendmessagesentry.ui \
     src/qt/forms/sendmessagesdialog.ui \
@@ -598,7 +598,7 @@ macx:OBJECTIVE_SOURCES += src/qt/macdockiconhandler.mm src/qt/macnotificationhan
 macx:LIBS += -framework Foundation -framework ApplicationServices -framework AppKit -framework CoreServices
 macx:DEFINES += MAC_OSX MSG_NOSIGNAL=0
 macx:ICON = src/qt/res/icons/bitcoin.icns
-macx:TARGET = "Memetic-Qt"
+macx:TARGET = "PepeCoin-Qt"
 macx:QMAKE_CFLAGS_THREAD += -pthread
 macx:QMAKE_LFLAGS_THREAD += -pthread
 macx:QMAKE_CXXFLAGS_THREAD += -pthread

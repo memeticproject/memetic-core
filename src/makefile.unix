@@ -143,12 +143,9 @@ OBJS= \
     obj/stealth.o \
     obj/activemasternode.o \
     obj/darksend.o \
-    obj/darksend-relay.o \
     obj/instantx.o \
     obj/masternodeconfig.o \
-    obj/masternodeman.o \
     obj/masternode.o \
-    obj/masternode-payments.o \
     obj/rpcdarksend.o \
     obj/spork.o \
     obj/crypto/hmac_sha256.o \
@@ -183,13 +180,13 @@ ifeq (${USE_WALLET}, 1)
         obj/walletdb.o
 endif
 
-all: memeticd
+all: pepecoind
 
 # build secp256k1
 DEFS += $(addprefix -I,$(CURDIR)/secp256k1/include)
 secp256k1/src/libsecp256k1_la-secp256k1.o:
 	@echo "Building Secp256k1 ..."; cd secp256k1; chmod 755 *; ./autogen.sh; ./configure --enable-module-recovery; make; cd ..;
-memeticd: secp256k1/src/libsecp256k1_la-secp256k1.o
+pepecoind: secp256k1/src/libsecp256k1_la-secp256k1.o
 
 # build leveldb
 LIBS += $(CURDIR)/leveldb/libleveldb.a $(CURDIR)/leveldb/libmemenv.a
@@ -231,11 +228,11 @@ obj/%.o: %.c
 	      -e '/^$$/ d' -e 's/$$/ :/' < $(@:%.o=%.d) >> $(@:%.o=%.P); \
 	  rm -f $(@:%.o=%.d)
 
-memeticd: $(OBJS:obj/%=obj/%)
+pepecoind: $(OBJS:obj/%=obj/%)
 	$(LINK) $(xCXXFLAGS) -o $@ $^ $(xLDFLAGS) $(LIBS)
 
 clean:
-	-rm -f memeticd
+	-rm -f pepecoind
 	-rm -f obj/*.o
 	-rm -f obj/*.P
 	-rm -f obj/build.h

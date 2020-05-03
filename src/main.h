@@ -9,7 +9,7 @@
 // Copyright (c) 2014 NetCoin Developers
 // Copyright (c) 2015 Transfercoin Developer
 // Copyright (c) 2015-2016 PepeCoin Developers
-// Copyright (c) 2016 The Memetic Developers
+// Copyright (c) 2016-2019 Memetic / PepeCoin Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -26,13 +26,15 @@
 #include "hashblock.h"
 
 #include <list>
+#include <algorithm>
 
 class CValidationState;
 
-#define START_MASTERNODE_PAYMENTS_TESTNET 1460635200  // "20160414 0600"
-#define START_MASTERNODE_PAYMENTS 1460635200
+#define START_MASTERNODE_PAYMENTS_TESTNET 1496987073 // June 9, 2017 2:20:04 AM GMT
+#define START_MASTERNODE_PAYMENTS 1499579073  //  Sunday, July 9, 2017 5:44:33 AM GMT
 
-static const int64_t DARKSEND_COLLATERAL = (0.01*COIN);
+static const int64_t DARKSEND_COLLATERAL = (5000*COIN);
+static const int64_t DARKSEND_FEE = (0.0001*COIN);
 static const int64_t DARKSEND_POOL_MAX = (9999.99*COIN);
 
 static const int64_t TARGET_SPACING = 60;
@@ -55,9 +57,42 @@ class CReserveKey;
 class CWallet;
 class CPepeMessage;
 
+static const int64_t PEPE_JACKOLANTERN_FORK_HEIGHT = 888000;
+static const int64_t PEPE_NTARGETTIMESPAN_UNSTICK_HEIGHT = 885655;
+
+static const int64_t MASTERTOAD_LOWERTRAFFIC_FORK = 1030000;
+static const int64_t MASTERTOAD_RELOWERTRAFFIC_FORK = 1177777;
+
 static const int64_t PEPE_STAKE_WINTER_SWITCH_HEIGHT = 312000;
 static const int64_t PEPE_STAKE_V2_SWITCH_HEIGHT = 32000;
 static const int64_t PEPE_STAKE_V2_SWITCH_HEIGHT_TESTNET = 10;
+
+
+// Rebrand Back To PEPE Hardfork
+// At this height, POS moves to 7%, POW moves to 7 for 1 month of blocks then 5 and then halving every year
+// and dev reward is implemented (3 dev addresses at 3% each)
+static const int64_t PEPE_REBRAND_HEIGHT = 580000;
+static const int64_t PEPE_REBRAND_HEIGHT_TESTNET = 100;
+static const std::string PEPE_REBRAND_DEV_1 = "UE5hSlMzbVBNY1FjNmdZc0xKMUg4endHSDZIMVh4VG40OA==";
+static const std::string PEPE_REBRAND_DEV_2 = "UFJyeFZQWGNUQjN2TGNjZlBVRlRNVzJ6NTd3Skd3ZEd1ag==";
+static const std::string PEPE_REBRAND_DEV_3 = "UExSY1ZHVmNZdkE2NmJNWGVQd2hSUTJleFdNdlBvVm83MQ==";
+static const std::string PEPE_DEV_4 =         "UFUxWm05N3R6NmRyQ0FuQmZNYjVFd2s3R0NSa3FYV2dZeA==";
+static const int64_t PEPE_REBRAND_PF_HEIGHT = 600000;
+static const int64_t PEPE_KEKDAQ_MID_HEIGHT = 733333;
+static const int64_t PEPE_KEKDAQ_MID_FIX_HEIGHT = 738500;
+static const int64_t PEPE_IPFSMN_FNL_HEIGHT = 833333;
+static const int64_t PEPE_KEKDAQ2_SWAP_HEIGHT = 1161137;
+static const int64_t PEPE_REBRAND_PF_HEIGHT_TESTNET = 200;
+static const int64_t PEPE_KEKDAQ_MID_HEIGHT_TESTNET = 10000;
+static const int64_t PEPE_DEV_GRANT = 333333 * COIN;
+static const int64_t PEPE_DEV_GRANT_MID = 333333 * COIN;
+static const int64_t PEPE_DEV_GRANT_FINAL = 111111 * COIN;
+static const int64_t DEVFEE_OFF_SWAP_FINAL = 777777 * COIN;
+static const int64_t PEPE_SO_SWAP_GRANT = 888888 * COIN;
+static const int64_t PEPE_STAKE_CONF_HEIGHT = 1021111;
+static const int64_t PEPE_STAKE_CONF_TWEAK = 1177777;
+static const int64_t PEPE_STAKEONLY_HEIGHT = 1700000;
+static const int64_t PEPE_DIFFIMPROVE_HEIGHT = 1830000;
 
 /** The maximum allowed size for a serialized block, in bytes (network rule) */
 static const unsigned int MAX_BLOCK_SIZE = 20000000;
@@ -76,18 +111,18 @@ static const unsigned int MAX_TX_SIGOPS = MAX_BLOCK_SIGOPS/5;
 /** The maximum number of orphan transactions kept in memory */
 static const unsigned int MAX_ORPHAN_TRANSACTIONS = MAX_BLOCK_SIZE/100;
 /** Default for -maxorphanblocks, maximum number of orphan blocks kept in memory */
-static const unsigned int DEFAULT_MAX_ORPHAN_BLOCKS = 10000;
+static const unsigned int DEFAULT_MAX_ORPHAN_BLOCKS = 750;
 /** The maximum number of entries in an 'inv' protocol message */
 static const unsigned int MAX_INV_SZ = 50000;
 /** Fees smaller than this (in satoshi) are considered zero fee (for transaction creation) */
 static const int64_t MIN_TX_FEE = 0.0001*COIN;
 /** Fees smaller than this (in satoshi) are considered zero fee (for relaying) */
 static const int64_t MIN_RELAY_TX_FEE = MIN_TX_FEE;
+
 /** No amount larger than this (in satoshi) is valid */
-static const int64_t MAX_MONEY = 16628690 * COIN; // 16,628,690 POW Coins
-
-// Pepe Stake Rate PSR / PIR : Staking rewards are variable depending on the number of coins held.
-
+// static const int64_t MAX_MONEY = 16628690 * COIN; // 16,628,690 POW Coins
+static const int64_t MAX_MONEY = 28600000 * COIN; // more realistic target project of 28.6m total coins by 2024 minus KDAQ burns
+// no longer used, kept for old block confirmation
 static const int PIR_LEVELS = 4; // number of entries in PIR_THRESHOLDS
 static const int64_t PIR_PHASEBLOCKS = 365 * 24 * 60; // one year for each phase
 static const int PIR_PHASES = 3; // pepe - three POS reward phases
@@ -113,12 +148,12 @@ inline bool MoneyRange(int64_t nValue) { return (nValue >= 0 && nValue <= MAX_MO
 static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
 
 static const int64_t DRIFT = 600;
-inline int64_t FutureDrift(int64_t nTime) { return nTime + DRIFT; }
+inline int64_t FutureDrift(int64_t nTime, int nHeight) { return nHeight >= PEPE_DIFFIMPROVE_HEIGHT ? nTime + 60 : nTime + DRIFT; }
 
 /** "reject" message codes **/
 static const unsigned char REJECT_INVALID = 0x10;
 
-inline int64_t GetMNCollateral(int nHeight) { return nHeight>=420000 ? 10000 : 10000; }  // No change for now.
+inline int64_t GetMNCollateral(int nHeight) { return 15000; }  // 15k PEPE / MEME required for MN
 
 extern CScript COINBASE_FLAGS;
 extern CCriticalSection cs_main;
@@ -203,10 +238,13 @@ int64_t GetPIRRewardCoinYear(int64_t nCoinValue, int64_t nHeight);
 int64_t GetProofOfStakeReward(const CBlockIndex* pindexPrev, int64_t nCoinAge, int64_t nFees, int64_t nCoinValue);
 int64_t GetProofOfStakeRewardV1(const CBlockIndex* pindexPrev, int64_t nCoinAge, int64_t nFees, int64_t nCoinValue);
 int64_t GetProofOfStakeRewardV2(const CBlockIndex* pindexPrev, int64_t nCoinAge, int64_t nFees, int64_t nCoinValue);
+int64_t GetProofOfStakeRewardV3(const CBlockIndex* pindexPrev, int64_t nCoinAge, int64_t nFees, int64_t nCoinValue);
+bool IsSyncing();
+void DropNonRespondingSyncPeer();
 bool IsInitialBlockDownload();
 bool IsConfirmedInNPrevBlocks(const CTxIndex& txindex, const CBlockIndex* pindexFrom, int nMaxDepth, int& nActualDepth);
 std::string GetWarnings(std::string strFor);
-bool GetTransaction(const uint256 &hash, CTransaction &tx, uint256 &hashBlock);
+bool GetTransaction(const uint256 &hash, CTransaction &tx, uint256 &hashBlock, bool fCheckMempool = true);
 uint256 WantedByOrphan(const COrphanBlock* pblockOrphan);
 const CBlockIndex* GetLastBlockIndex(const CBlockIndex* pindex, bool fProofOfStake);
 void ThreadStakeMiner(CWallet *pwallet);
@@ -232,6 +270,9 @@ void Misbehaving(NodeId nodeid, int howmuch);
 
 int64_t GetMasternodePayment(int nHeight, int64_t blockValue);
 
+void RebuildAddressIndexFromHeight(int64_t nStartHeight);
+void RebuildAddressIndexForBlock(int64_t nBlockHeight);
+
 /** Message cached from op_return **/
 class CPepeMessage
 {
@@ -255,6 +296,11 @@ public:
     {
         return DateTimeStrFormat(nTime) + ": " + msg;
     }
+
+bool operator < (const CPepeMessage& a) const
+     {
+         return (nTime < a.nTime);
+     }
 
 };
 
@@ -623,8 +669,7 @@ public:
     bool IsInMainChain() const { CBlockIndex *pindexRet; return GetDepthInMainChainINTERNAL(pindexRet) > 0; }
     int GetBlocksToMaturity() const;
     bool AcceptToMemoryPool(bool fLimitFree=true, bool fRejectInsaneFee=true, bool ignoreFees=false);
-    int GetTransactionLockSignatures() const;
-    bool IsTransactionLockTimedOut() const;
+    
 };
 
 
@@ -962,6 +1007,7 @@ public:
     bool SignBlock(CWallet& keystore, int64_t nFees);
     bool CheckBlockSignature() const;
     void RebuildAddressIndex(CTxDB& txdb);
+    bool CheckDevRewards(CTransaction tx, int64_t nHeight, int64_t nReward, int64_t nFees);
 
 private:
     bool SetBestChainInner(CTxDB& txdb, CBlockIndex *pindexNew);
@@ -1113,7 +1159,10 @@ public:
 
     int64_t GetPastTimeLimit() const
     {
-        return GetBlockTime() - DRIFT;
+        if(nHeight >= PEPE_DIFFIMPROVE_HEIGHT)
+            return GetBlockTime();
+        else
+            return GetBlockTime() - DRIFT;
     }
 
     enum { nMedianTimeSpan=11 };

@@ -5,6 +5,7 @@
 #include "wallet.h"
 #include "darksend.h"
 #include "instantx.h"
+#include "util.h"
 
 #include <stdint.h>
 
@@ -20,6 +21,7 @@ bool TransactionRecord::showTransaction(const CWalletTx &wtx)
             return false;
         }
     }
+    
     return true;
 }
 

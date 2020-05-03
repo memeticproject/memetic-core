@@ -2,6 +2,7 @@
 
 #include "transactiontablemodel.h"
 #include "transactionrecord.h"
+#include "util.h"
 
 #include <QDateTime>
 
@@ -23,6 +24,7 @@ TransactionFilterProxy::TransactionFilterProxy(QObject *parent) :
     limitRows(-1),
     showInactive(true)
 {
+    
 }
 
 bool TransactionFilterProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const

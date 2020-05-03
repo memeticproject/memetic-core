@@ -1,51 +1,51 @@
-Memetic X11 Proof of Work Block Reward Schedule
+PepeCoin X11 Proof of Work Block Reward Schedule
 ------------------------------------------------
 ```
 
-Block   1 - 99 - MEME Development Fund and Checkpointing
+Block   1 - 99 - PEPE Development Fund and Checkpointing
 
 * Block 100 Public Launch *
 
-Block   100      to     900      -  1500 MEME
-Block   900      to     1300     -  1200 MEME
-Block   1300     to     1900     -  1050 MEME
-Block   1900     to     2900     -  900  MEME
-Block   2900     to     4100     -  700  MEME
-Block   4100     to     6680     -  400  MEME
-Block   6680     to     9260     -  500  MEME
-Block   9260     to     11840    -  300  MEME
-Block   11840    to     14420    -  200  MEME
-Block   14420    to     17000    -  300  MEME
-Block   17000    to     19580    -  100  MEME
-Block   19580    to     22160    -  200  MEME
-Block   22160    to     24740    -  90   MEME
-Block   24740    to     27320    -  130  MEME
-Block   27320    to     29900    -  80   MEME
-Block   29900    to     32480    -  100  MEME
-Block   32480    to     35060    -  70   MEME
-Block   35060    to     37640    -  100  MEME
-Block   37640    to     40220    -  60   MEME
-Block   40220    to     42800    -  100  MEME
-Block   42800    to     45380    -  50   MEME
-Block   45380    to     47960    -  100  MEME
-Block   47960    to     50540    -  40   MEME
-Block   50540    to     53120    -  100  MEME
-Block   53120    to     55700    -  40   MEME
-Block   55700    to     58280    -  100  MEME
-Block   58280    to     60860    -  40   MEME
-Block   60860    to     63440    -  100  MEME
-Block   63440    to     66020    -  40   MEME
-Block   66020    to     68600    -  100  MEME
-Block   68600    to     70000    -  40   MEME
+Block   100      to     900      -  1500 PEPE
+Block   900      to     1300     -  1200 PEPE
+Block   1300     to     1900     -  1050 PEPE
+Block   1900     to     2900     -  900  PEPE
+Block   2900     to     4100     -  700  PEPE
+Block   4100     to     6680     -  400  PEPE
+Block   6680     to     9260     -  500  PEPE
+Block   9260     to     11840    -  300  PEPE
+Block   11840    to     14420    -  200  PEPE
+Block   14420    to     17000    -  300  PEPE
+Block   17000    to     19580    -  100  PEPE
+Block   19580    to     22160    -  200  PEPE
+Block   22160    to     24740    -  90   PEPE
+Block   24740    to     27320    -  130  PEPE
+Block   27320    to     29900    -  80   PEPE
+Block   29900    to     32480    -  100  PEPE
+Block   32480    to     35060    -  70   PEPE
+Block   35060    to     37640    -  100  PEPE
+Block   37640    to     40220    -  60   PEPE
+Block   40220    to     42800    -  100  PEPE
+Block   42800    to     45380    -  50   PEPE
+Block   45380    to     47960    -  100  PEPE
+Block   47960    to     50540    -  40   PEPE
+Block   50540    to     53120    -  100  PEPE
+Block   53120    to     55700    -  40   PEPE
+Block   55700    to     58280    -  100  PEPE
+Block   58280    to     60860    -  40   PEPE
+Block   60860    to     63440    -  100  PEPE
+Block   63440    to     66020    -  40   PEPE
+Block   66020    to     68600    -  100  PEPE
+Block   68600    to     70000    -  40   PEPE
 
 
 POW End Block 70,000
 
-Total from 1 Yr. POW: Approx 11.5m MEME
+Total from 1 Yr. POW: Approx 11.5m PEPE
 
-Development fund: 562,390 MEME
+Development fund: 562,390 PEPE
 
-Total MEME in POW & Fund: Approx 12m MEME
+Total PEPE in POW & Fund: Approx 12m PEPE
 
 
 ```

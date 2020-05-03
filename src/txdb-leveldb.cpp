@@ -28,9 +28,14 @@ leveldb::DB *txdb; // global pointer for LevelDB object instance
 
 static leveldb::Options GetOptions() {
     leveldb::Options options;
-    int nCacheSizeMB = GetArg("-dbcache", 25);
+    int nCacheSizeMB = GetArg("-leveldbcache", 100);
     options.block_cache = leveldb::NewLRUCache(nCacheSizeMB * 1048576);
-    options.filter_policy = leveldb::NewBloomFilterPolicy(10);
+    int nBloomFilterSize = GetArg("-leveldbbloomfilter", 32);
+    options.filter_policy = leveldb::NewBloomFilterPolicy(nBloomFilterSize);
+    int nWriteBufferSizeMB = GetArg("-writecache", 16);
+    options.write_buffer_size = nWriteBufferSizeMB * 1024 * 1024;
+    int nMaxOpenFiles = GetArg("-leveldbmaxopenfiles", 1000);
+    options.max_open_files = nMaxOpenFiles;
     return options;
 }
 
@@ -81,8 +86,7 @@ CTxDB::CTxDB(const char* pszMode)
 
     options = GetOptions();
     options.create_if_missing = fCreate;
-    options.filter_policy = leveldb::NewBloomFilterPolicy(10);
-
+    
     init_blockindex(options); // Init directory
     pdb = txdb;
 
@@ -116,6 +120,11 @@ CTxDB::CTxDB(const char* pszMode)
         fReadOnly = false;
         WriteVersion(DATABASE_VERSION);
         fReadOnly = fTmp;
+    }
+
+    if (!Read('S', salt)) {
+        salt = GetRandHash();
+        Write('S', salt);
     }
 
     LogPrintf("Opened LevelDB successfully\n");
@@ -198,30 +207,43 @@ bool CTxDB::ScanBatch(const CDataStream &key, string *value, bool *deleted) cons
 }
 
 bool CTxDB::WriteAddrIndex(uint160 addrHash, uint256 txHash)
-{
-    std::vector<uint256> txHashes;
-    if(!ReadAddrIndex(addrHash, txHashes))
-    {
-	txHashes.push_back(txHash);
-        return Write(make_pair(string("adr"), addrHash), txHashes);
-    }
-    else
-    {
-	if(std::find(txHashes.begin(), txHashes.end(), txHash) == txHashes.end()) 
-    	{
-    	    txHashes.push_back(txHash);
-            return Write(make_pair(string("adr"), addrHash), txHashes);
-	}
-	else
-	{
-	    return true; // already have this tx hash
-	}
-    }
+{    
+    unsigned char foo[0];
+    CHashWriter ss(SER_GETHASH, 0);
+    ss << salt;
+    ss << addrHash;
+    return Write(make_pair(make_pair('a', ss.GetHash().GetLow64()), txHash), FLATDATA(foo));
 }
 
 bool CTxDB::ReadAddrIndex(uint160 addrHash, std::vector<uint256>& txHashes)
 {
-    return Read(make_pair(string("adr"), addrHash), txHashes);
+    leveldb::Iterator *iterator = pdb->NewIterator(leveldb::ReadOptions());
+    uint64_t lookupid;
+    {
+        CHashWriter ss(SER_GETHASH, 0);
+        ss << salt;
+        ss << addrHash;
+        lookupid = ss.GetHash().GetLow64();
+    }
+
+    CDataStream ssStartKey(SER_DISK, CLIENT_VERSION);
+    ssStartKey << make_pair(string("a"), lookupid);    
+    iterator->Seek(ssStartKey.str());
+
+    while (iterator->Valid()) {
+        std::pair<std::pair<char, uint64_t>, uint256> key;
+        CDataStream ssKey(SER_DISK, CLIENT_VERSION);        
+        ssKey.write(iterator->key().data(), iterator->key().size());
+        ssKey >> key;
+        if (key.first.first == 'a' && key.first.second == lookupid) {
+            txHashes.push_back(key.second);
+        } else {
+            break;
+        }
+        iterator->Next();
+    }
+
+    return true;
 }
 
 bool CTxDB::WritePepeMessage(uint256 hash, const CPepeMessage& pmsg)
@@ -337,6 +359,7 @@ static CBlockIndex *InsertBlockIndex(uint256 hash)
 
 bool CTxDB::LoadPepeMessages()
 {
+    // Lighten log writing
     LogPrintf("Txdb LoadPepeMessages\n");
     if(mapPepeMessages.size() > 0) {
         // Already loaded once in this session.
@@ -346,35 +369,35 @@ bool CTxDB::LoadPepeMessages()
     leveldb::Iterator *iterator = pdb->NewIterator(leveldb::ReadOptions());
     CDataStream ssStartKey(SER_DISK, CLIENT_VERSION);
     ssStartKey << make_pair(string("pepe"), uint256(0));
-    LogPrintf("CTxDB::LoadPepeMessages created iterator and ssStartKey\n");
+    // LogPrintf("CTxDB::LoadPepeMessages created iterator and ssStartKey\n");
     iterator->Seek(ssStartKey.str());
-    LogPrintf("CTxDB::LoadPepeMessages iterator->Seek\n");
+    // LogPrintf("CTxDB::LoadPepeMessages iterator->Seek\n");
     while(iterator->Valid())
     {
         boost::this_thread::interruption_point();
         // Unpack keys and values.
         CDataStream ssKey(SER_DISK, CLIENT_VERSION);
-        LogPrintf("CTxDB::LoadPepeMessages: ssKey.write\n");
+        // LogPrintf("CTxDB::LoadPepeMessages: ssKey.write\n");
         ssKey.write(iterator->key().data(), iterator->key().size());
         CDataStream ssValue(SER_DISK, CLIENT_VERSION);
-        LogPrintf("CTxDB::LoadPepeMessages: ssValue.write\n");
+        // LogPrintf("CTxDB::LoadPepeMessages: ssValue.write\n");
         ssValue.write(iterator->value().data(), iterator->value().size());
         string strType;
-        LogPrintf("CTxDB::LoadPepeMessages: strType\n");
+        // LogPrintf("CTxDB::LoadPepeMessages: strType\n");
         ssKey >> strType;
         // Did we reach the end of the data to read?
         if (strType != "pepe")
             break;
         CPepeMessage pepemessage;
-        LogPrintf("CTxDB::LoadPepeMessages: ssValue to pepemessage\n");
+        // LogPrintf("CTxDB::LoadPepeMessages: ssValue to pepemessage\n");
         ssValue >> pepemessage;
 
         uint256 pepeHash = pepemessage.GetHash();
-        LogPrintf("CTxDB::LoadPepeMessages: mapPepeMessages insert %s\n", pepeHash.ToString());
+        // LogPrintf("CTxDB::LoadPepeMessages: mapPepeMessages insert %s\n", pepeHash.ToString());
         if(mapPepeMessages.count(pepeHash) == 0)
             mapPepeMessages.insert(make_pair(pepeHash, pepemessage));
 
-        LogPrintf("CTxDB::LoadPepeMessages: Iterator next\n");
+        //LogPrintf("CTxDB::LoadPepeMessages: Iterator next\n");
 
         iterator->Next();
     }
@@ -405,56 +428,63 @@ bool CTxDB::LoadBlockIndex()
     while (iterator->Valid())
     {
         boost::this_thread::interruption_point();
-        // Unpack keys and values.
-        CDataStream ssKey(SER_DISK, CLIENT_VERSION);
-        ssKey.write(iterator->key().data(), iterator->key().size());
-        CDataStream ssValue(SER_DISK, CLIENT_VERSION);
-        ssValue.write(iterator->value().data(), iterator->value().size());
-        string strType;
-        ssKey >> strType;
-        // Did we reach the end of the data to read?
-        if (strType != "blockindex")
+
+        try
+        {
+            // Unpack keys and values.
+            CDataStream ssKey(SER_DISK, CLIENT_VERSION);
+            ssKey.write(iterator->key().data(), iterator->key().size());
+            CDataStream ssValue(SER_DISK, CLIENT_VERSION);
+            ssValue.write(iterator->value().data(), iterator->value().size());
+            string strType;
+            ssKey >> strType;
+            // Did we reach the end of the data to read?
+            if (strType != "blockindex")
+                break;
+            CDiskBlockIndex diskindex;
+            ssValue >> diskindex;
+
+            uint256 blockHash = diskindex.GetBlockHash();
+
+            // Construct block index object
+            CBlockIndex* pindexNew    = InsertBlockIndex(blockHash);
+            pindexNew->pprev          = InsertBlockIndex(diskindex.hashPrev);
+            pindexNew->pnext          = InsertBlockIndex(diskindex.hashNext);
+            pindexNew->nFile          = diskindex.nFile;
+            pindexNew->nBlockPos      = diskindex.nBlockPos;
+            pindexNew->nHeight        = diskindex.nHeight;
+            pindexNew->nMint          = diskindex.nMint;
+            pindexNew->nMoneySupply   = diskindex.nMoneySupply;
+            pindexNew->nFlags         = diskindex.nFlags;
+            pindexNew->nStakeModifier = diskindex.nStakeModifier;
+            pindexNew->bnStakeModifierV2 = diskindex.bnStakeModifierV2;
+            pindexNew->prevoutStake   = diskindex.prevoutStake;
+            pindexNew->nStakeTime     = diskindex.nStakeTime;
+            pindexNew->hashProof      = diskindex.hashProof;
+            pindexNew->nVersion       = diskindex.nVersion;
+            pindexNew->hashMerkleRoot = diskindex.hashMerkleRoot;
+            pindexNew->nTime          = diskindex.nTime;
+            pindexNew->nBits          = diskindex.nBits;
+            pindexNew->nNonce         = diskindex.nNonce;
+
+            // Watch for genesis block
+            if (pindexGenesisBlock == NULL && blockHash == Params().HashGenesisBlock())
+                pindexGenesisBlock = pindexNew;
+
+            if (!pindexNew->CheckIndex()) {
+                delete iterator;
+                return error("LoadBlockIndex() : CheckIndex failed at %d", pindexNew->nHeight);
+            }
+
+            // NovaCoin: build setStakeSeen
+            if (pindexNew->IsProofOfStake())
+                setStakeSeen.insert(make_pair(pindexNew->prevoutStake, pindexNew->nStakeTime));
+
+            iterator->Next();
+        } catch (std::exception& e) {
+            LogPrintf("%s : Deserialize or I/O error - %s\n", __func__, e.what());
             break;
-        CDiskBlockIndex diskindex;
-        ssValue >> diskindex;
-
-        uint256 blockHash = diskindex.GetBlockHash();
-
-        // Construct block index object
-        CBlockIndex* pindexNew    = InsertBlockIndex(blockHash);
-        pindexNew->pprev          = InsertBlockIndex(diskindex.hashPrev);
-        pindexNew->pnext          = InsertBlockIndex(diskindex.hashNext);
-        pindexNew->nFile          = diskindex.nFile;
-        pindexNew->nBlockPos      = diskindex.nBlockPos;
-        pindexNew->nHeight        = diskindex.nHeight;
-        pindexNew->nMint          = diskindex.nMint;
-        pindexNew->nMoneySupply   = diskindex.nMoneySupply;
-        pindexNew->nFlags         = diskindex.nFlags;
-        pindexNew->nStakeModifier = diskindex.nStakeModifier;
-        pindexNew->bnStakeModifierV2 = diskindex.bnStakeModifierV2;
-        pindexNew->prevoutStake   = diskindex.prevoutStake;
-        pindexNew->nStakeTime     = diskindex.nStakeTime;
-        pindexNew->hashProof      = diskindex.hashProof;
-        pindexNew->nVersion       = diskindex.nVersion;
-        pindexNew->hashMerkleRoot = diskindex.hashMerkleRoot;
-        pindexNew->nTime          = diskindex.nTime;
-        pindexNew->nBits          = diskindex.nBits;
-        pindexNew->nNonce         = diskindex.nNonce;
-
-        // Watch for genesis block
-        if (pindexGenesisBlock == NULL && blockHash == Params().HashGenesisBlock())
-            pindexGenesisBlock = pindexNew;
-
-        if (!pindexNew->CheckIndex()) {
-            delete iterator;
-            return error("LoadBlockIndex() : CheckIndex failed at %d", pindexNew->nHeight);
         }
-
-        // NovaCoin: build setStakeSeen
-        if (pindexNew->IsProofOfStake())
-            setStakeSeen.insert(make_pair(pindexNew->prevoutStake, pindexNew->nStakeTime));
-
-        iterator->Next();
     }
     delete iterator;
 

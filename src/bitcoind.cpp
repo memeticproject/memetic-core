@@ -52,12 +52,12 @@ bool AppInit(int argc, char* argv[])
         if (mapArgs.count("-?") || mapArgs.count("--help"))
         {
             // First part of help message is specific to bitcoind / RPC client
-            std::string strUsage = _("Memetic version") + " " + FormatFullVersion() + "\n\n" +
+            std::string strUsage = _("PepeCoin version") + " " + FormatFullVersion() + "\n\n" +
                 _("Usage:") + "\n" +
-                  "  memeticd [options]                     " + "\n" +
-                  "  memeticd [options] <command> [params]  " + _("Send command to -server or memeticd") + "\n" +
-                  "  memeticd [options] help                " + _("List commands") + "\n" +
-                  "  memeticd [options] help <command>      " + _("Get help for a command") + "\n";
+                  "  pepecoind [options]                     " + "\n" +
+                  "  pepecoind [options] <command> [params]  " + _("Send command to -server or pepecoind") + "\n" +
+                  "  pepecoind [options] help                " + _("List commands") + "\n" +
+                  "  pepecoind [options] help <command>      " + _("Get help for a command") + "\n";
 
             strUsage += "\n" + HelpMessage();
 
@@ -67,7 +67,7 @@ bool AppInit(int argc, char* argv[])
 
         // Command-line RPC
         for (int i = 1; i < argc; i++)
-            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "memetic:"))
+            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "pepecoin:"))
                 fCommandLine = true;
 
         if (fCommandLine)

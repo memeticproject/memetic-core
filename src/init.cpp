@@ -14,12 +14,7 @@
 #include "util.h"
 #include "ui_interface.h"
 #include "checkpoints.h"
-#include "darksend-relay.h"
 #include "activemasternode.h"
-#include "masternode-payments.h"
-#include "masternode.h"
-#include "masternodeman.h"
-#include "masternodeconfig.h"
 #include "spork.h"
 #include "smessage.h"
 
@@ -109,7 +104,7 @@ void Shutdown()
     TRY_LOCK(cs_Shutdown, lockShutdown);
     if (!lockShutdown) return;
 
-    RenameThread("memetic-shutoff");
+    RenameThread("pepecoin-shutoff");
     mempool.AddTransactionsUpdated(1);
     StopRPCThreads();
     SecureMsgShutdown();
@@ -120,7 +115,7 @@ void Shutdown()
         bitdb.Flush(false);
 #endif
     StopNode();
-    DumpMasternodes();
+   
     {
         LOCK(cs_main);
 #ifdef ENABLE_WALLET
@@ -185,8 +180,9 @@ std::string HelpMessage()
 {
     string strUsage = _("Options:") + "\n";
     strUsage += "  -?                     " + _("This help message") + "\n";
-    strUsage += "  -conf=<file>           " + _("Specify configuration file (default: memetic.conf)") + "\n";
-    strUsage += "  -pid=<file>            " + _("Specify pid file (default: memeticd.pid)") + "\n";
+    strUsage += "  -messagewall           " + _("Enable caching of pepe message wall messages. (default: false)") + "\n";
+    strUsage += "  -conf=<file>           " + _("Specify configuration file (default: pepecoin.conf)") + "\n";
+    strUsage += "  -pid=<file>            " + _("Specify pid file (default: pepecoind.pid)") + "\n";
     strUsage += "  -datadir=<dir>         " + _("Specify data directory") + "\n";
     strUsage += "  -wallet=<dir>          " + _("Specify wallet file (within data directory)") + "\n";
     strUsage += "  -dbcache=<n>           " + _("Set database cache size in megabytes (default: 25)") + "\n";
@@ -200,6 +196,9 @@ std::string HelpMessage()
     strUsage += "  -addnode=<ip>          " + _("Add a node to connect to and attempt to keep the connection open") + "\n";
     strUsage += "  -connect=<ip>          " + _("Connect only to the specified node(s)") + "\n";
     strUsage += "  -seednode=<ip>         " + _("Connect to a node to retrieve peer addresses, and disconnect") + "\n";
+    strUsage += "  -synctimeout=<n>       " + _("Specify block download timeout in seconds (default: 60)") + "\n";    
+    strUsage += "  -syncspan=<n>          " + _("Specify last block age in minutes after which node goes into syncing mode (default: 90)") + "\n";        
+    strUsage += "  -txrelayexpiration=<n> " + _("Specify age in minutes after which transactions expire from the relay pool (default: 180)") + "\n";            
     strUsage += "  -externalip=<ip>       " + _("Specify your own public address") + "\n";
     strUsage += "  -onlynet=<net>         " + _("Only connect to nodes in network <net> (IPv4, IPv6 or Tor)") + "\n";
     strUsage += "  -discover              " + _("Discover own IP address (default: 1 when listening and no -externalip)") + "\n";
@@ -207,7 +206,7 @@ std::string HelpMessage()
     strUsage += "  -listen                " + _("Accept connections from outside (default: 1 if no -proxy or -connect)") + "\n";
     strUsage += "  -bind=<addr>           " + _("Bind to given address. Use [host]:port notation for IPv6") + "\n";
     strUsage += "  -dnsseed               " + _("Query for peer addresses via DNS lookup, if low on addresses (default: 1 unless -connect)") + "\n";
-    strUsage += "  -forcednsseed          " + _("Always query for peer addresses via DNS lookup (default: 0)") + "\n";
+    strUsage += "  -forcednsseed          " + _("Always query for peer addresses via DNS lookup (default: 1)") + "\n";
     strUsage += "  -synctime              " + _("Sync time with other nodes. Disable if time on your system is precise e.g. syncing with NTP (default: 1)") + "\n";
     strUsage += "  -banscore=<n>          " + _("Threshold for disconnecting misbehaving peers (default: 100)") + "\n";
     strUsage += "  -bantime=<n>           " + _("Number of seconds to keep misbehaving peers from reconnecting (default: 86400)") + "\n";
@@ -260,7 +259,7 @@ std::string HelpMessage()
     strUsage += "  -alertnotify=<cmd>     " + _("Execute command when a relevant alert is received (%s in cmd is replaced by message)") + "\n";
     strUsage += "  -upgradewallet         " + _("Upgrade wallet to latest format") + "\n";
     strUsage += "  -createwalletbackups=<n> " + _("Number of automatic wallet backups (default: 10)") + "\n";
-    strUsage += "  -keypool=<n>           " + _("Set key pool size to <n> (default: 1000) (litemode: 100)") + "\n";
+    strUsage += "  -keypool=<n>           " + _("Set key pool size to <n> (default: 1000) (nomntesting (formally litemode): 100)") + "\n";
     strUsage += "  -rescan                " + _("Rescan the block chain for missing wallet transactions") + "\n";
     strUsage += "  -salvagewallet         " + _("Attempt to recover private keys from a corrupt wallet.dat") + "\n";
     strUsage += "  -checkblocks=<n>       " + _("How many blocks to check at startup (default: 500, 0 = all)") + "\n";
@@ -278,8 +277,8 @@ std::string HelpMessage()
     strUsage += "  -rpcsslcertificatechainfile=<file.cert>  " + _("Server certificate file (default: server.cert)") + "\n";
     strUsage += "  -rpcsslprivatekeyfile=<file.pem>         " + _("Server private key (default: server.pem)") + "\n";
     strUsage += "  -rpcsslciphers=<ciphers>                 " + _("Acceptable ciphers (default: TLSv1.2+HIGH:TLSv1+HIGH:!SSLv2:!aNULL:!eNULL:!3DES:@STRENGTH)") + "\n";
-    strUsage += "  -litemode=<n>          " + _("Disable all Darksend and Stealth Messaging related functionality (0-1, default: 0)") + "\n";
-strUsage += "\n" + _("Masternode options:") + "\n";
+    strUsage += "  -nomntesting=<n>           " + _("Disable all Masternode, Darksend and Stealth Messaging related functionality for testing (formally litemode) (0-1, default: 0)") + "\n";
+    strUsage += "\n" + _("Masternode options:") + "\n";
     strUsage += "  -masternode=<n>            " + _("Enable the client to act as a masternode (0-1, default: 0)") + "\n";
     strUsage += "  -mnconf=<file>             " + _("Specify masternode configuration file (default: masternode.conf)") + "\n";
     strUsage += "  -mnconflock=<n>            " + _("Lock masternodes from masternode configuration file (default: 1)") + "\n";
@@ -290,7 +289,7 @@ strUsage += "\n" + _("Masternode options:") + "\n";
     strUsage += "\n" + _("Darksend options:") + "\n";
     strUsage += "  -enabledarksend=<n>          " + _("Enable use of automated darksend for funds stored in this wallet (0-1, default: 0)") + "\n";
     strUsage += "  -darksendrounds=<n>          " + _("Use N separate masternodes to anonymize funds  (2-8, default: 2)") + "\n";
-    strUsage += "  -anonymizetransferamount=<n> " + _("Keep N Memetic anonymized (default: 0)") + "\n";
+    strUsage += "  -anonymizetransferamount=<n> " + _("Keep N PepeCoin anonymized (default: 0)") + "\n";
     strUsage += "  -liquidityprovider=<n>       " + _("Provide liquidity to Darksend by infrequently mixing coins on a continual basis (0-100, default: 0, 1=very frequent, high fees, 100=very infrequent, low fees)") + "\n";
 
     strUsage += "\n" + _("InstantX options:") + "\n";
@@ -300,6 +299,17 @@ strUsage += "\n" + _("Masternode options:") + "\n";
         "  -nosmsg                                  " + _("Disable secure messaging.") + "\n" +
         "  -debugsmsg                               " + _("Log extra debug messages.") + "\n" +
         "  -smsgscanchain                           " + _("Scan the block chain for public key addresses on startup.") + "\n";
+    strUsage += "\n" + _("Additional PepeCoin options:") + "\n";
+    strUsage += _(" Staking Options:") + "\n";
+    strUsage += "  -blockthrottle=<n>          " + _("Milliseconds to wait after finding a stake block before broadcasting (default: 5000)") + "\n";
+    strUsage += "  -minersleep=<n>          " + _("Milliseconds to wait after trying a stake input computation, unlisted option from Blackcoin  (default: 500)") + "\n";
+    strUsage += _(" Multicore Message Handling:") + "\n";
+    strUsage += "  -messagecorelimit=<n>       " + _("Limit number of cores to use for message handling threads, the default is more than most systems to allow use of all cores by default (default: 64)") + "\n";
+    strUsage += _(" LevelDb Options:") + "\n";
+    strUsage += "  -leveldbbloomfilter=<n>     " + _("Bits to use in bloom filter (default: 32)") + "\n";
+    strUsage += "  -writecache=<n>             " + _("Write cache in MB, improve performance/disk io but higher values can result in longer recovery time after a crash. (Default: 16)") + "\n";
+    strUsage += "  -leveldbmaxopenfiles=<n>    " + _("Max open files at a time for leveldb.  Can improve performance as block index/tx index grows, but your OS may have a limit. (Default:1000)") + "\n";
+    strUsage += "  -leveldbcache-<n>           " + _("Size in MB of the database that leveldb will cache in memory.  Can result in dramatic performance improvement at the expense of RAM usage.  (Default: 100)") + "\n";
 
 
     return strUsage;
@@ -392,9 +402,6 @@ bool AppInit2(boost::thread_group& threadGroup)
         if (SoftSetBoolArg("-listen", true))
             LogPrintf("AppInit2 : parameter interaction: -bind set -> setting -listen=1\n");
     }
-
-    // Process masternode config
-    masternodeConfig.read(GetMasternodeConfigFile());
 
     if (mapArgs.count("-connect") && mapMultiArgs["-connect"].size() > 0) {
         // when only connecting to trusted nodes, do not seed via DNS, or listen by default
@@ -508,7 +515,7 @@ bool AppInit2(boost::thread_group& threadGroup)
 
     // Sanity check
     if (!InitSanityCheck())
-        return InitError(_("Initialization sanity check failed. Memetic is shutting down."));
+        return InitError(_("Initialization sanity check failed. PepeCoin is shutting down."));
 
     std::string strDataDir = GetDataDir().string();
 #ifdef ENABLE_WALLET
@@ -524,12 +531,12 @@ bool AppInit2(boost::thread_group& threadGroup)
     if (file) fclose(file);
     static boost::interprocess::file_lock lock(pathLockFile.string().c_str());
     if (!lock.try_lock())
-        return InitError(strprintf(_("Cannot obtain a lock on data directory %s. Memetic is probably already running."), strDataDir));
+        return InitError(strprintf(_("Cannot obtain a lock on data directory %s. PepeCoin is probably already running."), strDataDir));
 
     if (GetBoolArg("-shrinkdebugfile", !fDebug))
         ShrinkDebugFile();
     LogPrintf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    LogPrintf("Memetic version %s (%s)\n", FormatFullVersion(), CLIENT_DATE);
+    LogPrintf("PepeCoin version %s (%s)\n", FormatFullVersion(), CLIENT_DATE);
     LogPrintf("Using OpenSSL version %s\n", SSLeay_version(SSLEAY_VERSION));
     if (!fLogTimestamps)
         LogPrintf("Startup time: %s\n", DateTimeStrFormat("%x %H:%M:%S", GetTime()));
@@ -549,7 +556,7 @@ bool AppInit2(boost::thread_group& threadGroup)
     nMasternodeMinProtocol = GetArg("-masternodeminprotocol", MIN_POOL_PEER_PROTO_VERSION);
 
     if (fDaemon)
-        fprintf(stdout, "Memetic server starting\n");
+        fprintf(stdout, "PepeCoin server starting\n");
 
     int64_t nStart;
 
@@ -689,8 +696,12 @@ bool AppInit2(boost::thread_group& threadGroup)
         }
         for (int n = 0; n < NET_MAX; n++) {
             enum Network net = (enum Network)n;
-            if (!nets.count(net))
+            if (!nets.count(net)){
                 SetLimited(net);
+            } else {
+                SetReachable(NET_IPV4);
+                SetReachable(NET_IPV6);
+            }
         }
     }
 
@@ -860,10 +871,10 @@ bool AppInit2(boost::thread_group& threadGroup)
                 InitWarning(msg);
             }
             else if (nLoadWalletRet == DB_TOO_NEW)
-                strErrors << _("Error loading wallet.dat: Wallet requires newer version of Memetic") << "\n";
+                strErrors << _("Error loading wallet.dat: Wallet requires newer version of PepeCoin") << "\n";
             else if (nLoadWalletRet == DB_NEED_REWRITE)
             {
-                strErrors << _("Wallet needed to be rewritten: restart Memetic to complete") << "\n";
+                strErrors << _("Wallet needed to be rewritten: restart PepeCoin to complete") << "\n";
                 LogPrintf("%s", strErrors.str());
                 return InitError(strErrors.str());
             }
@@ -970,22 +981,6 @@ bool AppInit2(boost::thread_group& threadGroup)
     if (!strErrors.str().empty())
         return InitError(strErrors.str());
 
-    uiInterface.InitMessage(_("Loading masternode cache..."));
-
-    CMasternodeDB mndb;
-    CMasternodeDB::ReadResult readResult = mndb.Read(mnodeman);
-    if (readResult == CMasternodeDB::FileError)
-        LogPrintf("Missing masternode cache file - mncache.dat, will try to recreate\n");
-    else if (readResult != CMasternodeDB::Ok)
-    {
-        LogPrintf("Error reading mncache.dat: ");
-        if(readResult == CMasternodeDB::IncorrectFormat)
-            LogPrintf("magic is ok but data has invalid format, will try to recreate\n");
-        else
-            LogPrintf("file format is unknown or invalid, please fix it manually\n");
-    }
-
-
     fMasterNode = GetBoolArg("-masternode", false);
     if(fMasterNode) {
         LogPrintf("IS DARKSEND MASTER NODE\n");
@@ -994,7 +989,7 @@ bool AppInit2(boost::thread_group& threadGroup)
         LogPrintf(" addr %s\n", strMasterNodeAddr.c_str());
 
         if(!strMasterNodeAddr.empty()){
-            CService addrTest = CService(strMasterNodeAddr, fNameLookup);
+            CService addrTest = CService(strMasterNodeAddr);
             if (!addrTest.IsValid()) {
                 return InitError("Invalid -masternodeaddr address: " + strMasterNodeAddr);
             }
@@ -1017,19 +1012,6 @@ bool AppInit2(boost::thread_group& threadGroup)
         } else {
             return InitError(_("You must specify a masternodeprivkey in the configuration. Please see documentation for help."));
         }
-
-        activeMasternode.ManageStatus();
-    }
-
-    if(GetBoolArg("-mnconflock", false)) {
-        LogPrintf("Locking Masternodes:\n");
-        uint256 mnTxHash;
-        BOOST_FOREACH(CMasternodeConfig::CMasternodeEntry mne, masternodeConfig.getEntries()) {
-            LogPrintf("  %s %s\n", mne.getTxHash(), mne.getOutputIndex());
-            mnTxHash.SetHex(mne.getTxHash());
-            COutPoint outpoint = COutPoint(mnTxHash, boost::lexical_cast<unsigned int>(mne.getOutputIndex()));
-            pwalletMain->LockCoin(outpoint);
-        }
     }
 
     fEnableDarksend = GetBoolArg("-enabledarksend", false);
@@ -1045,32 +1027,39 @@ bool AppInit2(boost::thread_group& threadGroup)
         nDarksendRounds = 99999;
     }
 
-    nAnonymizeTransferAmount = GetArg("-anonymizetransferamount", 0);
-    if(nAnonymizeTransferAmount > 999999) nAnonymizeTransferAmount = 999999;
-    if(nAnonymizeTransferAmount < 2) nAnonymizeTransferAmount = 2;
+    nAnonymizePepeCoinAmount = GetArg("-anonymizePepeCoinamount", 0);
+    if(nAnonymizePepeCoinAmount > 999999) nAnonymizePepeCoinAmount = 999999;
+    if(nAnonymizePepeCoinAmount < 2) nAnonymizePepeCoinAmount = 2;
 
-    fEnableInstantX = GetBoolArg("-enableinstantx", fEnableInstantX);
-    nInstantXDepth = GetArg("-instantxdepth", nInstantXDepth);
-    nInstantXDepth = std::min(std::max(nInstantXDepth, 0), 60);
+    bool fEnableInstantX = GetBoolArg("-enableinstantx", true);
+    if(fEnableInstantX){
+        nInstantXDepth = GetArg("-instantxdepth", 5);
+        if(nInstantXDepth > 60) nInstantXDepth = 60;
+        if(nInstantXDepth < 0) nAnonymizePepeCoinAmount = 0;
+    } else {
+        nInstantXDepth = 0;
+    }
 
     //lite mode disables all Masternode and Darksend related functionality
-    fLiteMode = GetBoolArg("-litemode", false);
+    fLiteMode = GetBoolArg("-nomntesting", false);
     if(fMasterNode && fLiteMode){
-        return InitError("You can not start a masternode in litemode");
+        return InitError("You can not start a masternode in nomntesting mode, formally known as litemode");
     }
 
     LogPrintf("fLiteMode %d\n", fLiteMode);
     LogPrintf("nInstantXDepth %d\n", nInstantXDepth);
     LogPrintf("Darksend rounds %d\n", nDarksendRounds);
-    LogPrintf("Anonymize Memetic Amount %d\n", nAnonymizeTransferAmount);
+    LogPrintf("Anonymize PepeCoin Amount %d\n", nAnonymizePepeCoinAmount);
 
     /* Denominations
        A note about convertability. Within Darksend pools, each denomination
        is convertable to another.
        For example:
-       1MEME+1000 == (.1TX+100)*10
-       10MEME+10000 == (1TX+1000)*10
+       1PepeCoin+1000 == (.1PepeCoin+100)*10
+       10PepeCoin+10000 == (1PepeCoin+1000)*10
     */
+    darkSendDenominations.push_back( (100000      * COIN)+100000000 );    
+    darkSendDenominations.push_back( (10000       * COIN)+10000000 );
     darkSendDenominations.push_back( (1000        * COIN)+1000000 );
     darkSendDenominations.push_back( (100         * COIN)+100000 );
     darkSendDenominations.push_back( (10          * COIN)+10000 );
@@ -1083,7 +1072,8 @@ bool AppInit2(boost::thread_group& threadGroup)
 
     darkSendPool.InitCollateralAddress();
 
-    threadGroup.create_thread(boost::bind(&ThreadCheckDarkSendPool));
+    if(!fLiteMode) //don't start this thread in lite mode
+        threadGroup.create_thread(boost::bind(&ThreadCheckDarkSendPool));
 
 
 
@@ -1123,12 +1113,38 @@ bool AppInit2(boost::thread_group& threadGroup)
     if (fServer)
         StartRPCThreads();
 
+    BOOST_FOREACH(PAIRTYPE(std::string, CmastertoadConfig) mastertoad, pwalletMain->mapMymastertoads)
+    {
+        CmastertoadConfig c = mastertoad.second;
+        if(c.isLocal)
+        {
+        strMasterNodeAddr = c.sAddress;
+        strMasterNodePrivKey = c.sMasternodePrivKey;
+
+            CKey keyds;
+                CPubKey pubkeyds;
+        std::string errorMessage;
+                if(!darkSendSigner.SetKey(strMasterNodePrivKey, errorMessage, keyds, pubkeyds))
+                {
+                    return InitError("Invalid masternodeprivkey. Please see documenation.");
+                }
+
+            activeMasternode.pubKeyMasternode = pubkeyds;
+            fMasterNode = true;
+            break;
+        }
+    }
+
 #ifdef ENABLE_WALLET
     // Mine proof-of-stake blocks in the background
     if (!GetBoolArg("-staking", true))
         LogPrintf("Staking disabled\n");
-    else if (pwalletMain)
+    else if (pwalletMain && !fMasterNode) // don't stake if we are a local masternode
+    {
+        if(TestNet())
+            nStakeMinAge = 6 * 60; // 6 minutes for TestNet so we don't have to wait so long to test things
         threadGroup.create_thread(boost::bind(&ThreadStakeMiner, pwalletMain));
+    }
 #endif
 
     // ********************************************************* Step 12: finished
@@ -1137,6 +1153,11 @@ bool AppInit2(boost::thread_group& threadGroup)
 
 #ifdef ENABLE_WALLET
     if (pwalletMain) {
+        BOOST_FOREACH(PAIRTYPE(std::string, CmastertoadConfig) mastertoad, pwalletMain->mapMymastertoads)
+        {
+            uiInterface.NotifymastertoadChanged(mastertoad.second);
+        }
+
         // Add wallet transactions that aren't already in a block to mapTransactions
         pwalletMain->ReacceptWalletTransactions();
 

@@ -3,22 +3,22 @@
     <name>AboutDialog</name>
     <message>
         <location filename="../forms/aboutdialog.ui" line="+14"/>
-        <source>About Memetic</source>
-        <translation>Om Memetic</translation>
+        <source>About PepeCoin</source>
+        <translation>Om PepeCoin</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>&lt;b&gt;Memetic&lt;/b&gt; version</source>
-        <translation>&lt;b&gt;Memetic&lt;/b&gt; versjon</translation>
+        <source>&lt;b&gt;PepeCoin&lt;/b&gt; version</source>
+        <translation>&lt;b&gt;PepeCoin&lt;/b&gt; versjon</translation>
     </message>
     <message>
         <location line="+41"/>
         <source>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2014 The Memetic developers</source>
+Copyright © 2014 The PepeCoin developers</source>
         <translation>Copyright © 2009-2014 The Bitcoin developers
 Copyright © 2012-2014 The NovaCoin developers
-Copyright © 2014 The Memetic developers</translation>
+Copyright © 2014 The PepeCoin developers</translation>
     </message>
     <message>
         <location line="+15"/>
@@ -60,7 +60,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-43"/>
-        <source>These are your Memetic addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
+        <source>These are your PepeCoin addresses for receiving payments. You may want to give a different one to each sender so you can keep track of who is paying you.</source>
         <translation>Dette er adressene for å motta betalinger. Du ønsker kanskje å gi ulike adresser til hver avsender så du lettere kan holde øye med hvem som betaler deg.</translation>
     </message>
     <message>
@@ -75,8 +75,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+7"/>
-        <source>Sign a message to prove you own a Memetic address</source>
-        <translation>Signer en melding for å bevise din egen Memetic adresse.</translation>
+        <source>Sign a message to prove you own a PepeCoin address</source>
+        <translation>Signer en melding for å bevise din egen PepeCoin adresse.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -90,8 +90,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-10"/>
-        <source>Verify a message to ensure it was signed with a specified Memetic address</source>
-        <translation>Verifiser en melding får å forsikre deg om at den er signert med en spesifikk Memetic adresse</translation>
+        <source>Verify a message to ensure it was signed with a specified PepeCoin address</source>
+        <translation>Verifiser en melding får å forsikre deg om at den er signert med en spesifikk PepeCoin adresse</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -258,7 +258,7 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+82"/>
-        <source>Memetic will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
+        <source>PepeCoin will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your coins from being stolen by malware infecting your computer.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -352,8 +352,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+4"/>
-        <source>Show information about Memetic</source>
-        <translation>Vis info om Memetic</translation>
+        <source>Show information about PepeCoin</source>
+        <translation>Vis info om PepeCoin</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -392,13 +392,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="-55"/>
-        <source>Send coins to a Memetic address</source>
-        <translation>Send coins til en Memetic adresse</translation>
+        <source>Send coins to a PepeCoin address</source>
+        <translation>Send coins til en PepeCoin adresse</translation>
     </message>
     <message>
         <location line="+39"/>
-        <source>Modify configuration options for Memetic</source>
-        <translation>Endre innstillingene til Memetic</translation>
+        <source>Modify configuration options for PepeCoin</source>
+        <translation>Endre innstillingene til PepeCoin</translation>
     </message>
     <message>
         <location line="+17"/>
@@ -438,8 +438,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="-214"/>
         <location line="+551"/>
-        <source>Memetic</source>
-        <translation>Memetic</translation>
+        <source>PepeCoin</source>
+        <translation>PepeCoin</translation>
     </message>
     <message>
         <location line="-551"/>
@@ -448,8 +448,8 @@ This product includes software developed by the OpenSSL Project for use in the O
     </message>
     <message>
         <location line="+193"/>
-        <source>&amp;About Memetic</source>
-        <translation>&amp;Om Memetic</translation>
+        <source>&amp;About PepeCoin</source>
+        <translation>&amp;Om PepeCoin</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -500,13 +500,13 @@ This product includes software developed by the OpenSSL Project for use in the O
     <message>
         <location line="+0"/>
         <location line="+58"/>
-        <source>Memetic client</source>
-        <translation>Memetic klient</translation>
+        <source>PepeCoin client</source>
+        <translation>PepeCoin klient</translation>
     </message>
     <message numerus="yes">
         <location line="+70"/>
-        <source>%n active connection(s) to Memetic network</source>
-        <translation><numerusform>%n aktiv tilkobling til Memetic nettverket</numerusform><numerusform>%n aktive tilkoblinger til Memetic nettverket</numerusform></translation>
+        <source>%n active connection(s) to PepeCoin network</source>
+        <translation><numerusform>%n aktiv tilkobling til PepeCoin nettverket</numerusform><numerusform>%n aktive tilkoblinger til PepeCoin nettverket</numerusform></translation>
     </message>
     <message>
         <location line="+488"/>
@@ -600,7 +600,7 @@ Adresse: %4
     <message>
         <location line="-15"/>
         <location line="+15"/>
-        <source>URI can not be parsed! This can be caused by an invalid Memetic address or malformed URI parameters.</source>
+        <source>URI can not be parsed! This can be caused by an invalid PepeCoin address or malformed URI parameters.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -723,7 +723,7 @@ Adresse: %4
     </message>
     <message>
         <location filename="../bitcoin.cpp" line="+104"/>
-        <source>A fatal error occurred. Memetic can no longer continue safely and will quit.</source>
+        <source>A fatal error occurred. PepeCoin can no longer continue safely and will quit.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1045,8 +1045,8 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="-5"/>
-        <source>The entered address &quot;%1&quot; is not a valid Memetic address.</source>
-        <translation>Den angitte adressen &quot;%1&quot; er ikke en gyldig Memetic adresse.</translation>
+        <source>The entered address &quot;%1&quot; is not a valid PepeCoin address.</source>
+        <translation>Den angitte adressen &quot;%1&quot; er ikke en gyldig PepeCoin adresse.</translation>
     </message>
     <message>
         <location line="+10"/>
@@ -1064,8 +1064,8 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     <message>
         <location filename="../guiutil.cpp" line="+426"/>
         <location line="+12"/>
-        <source>memetic-Qt</source>
-        <translation>memetic-Qt</translation>
+        <source>pepecoin-Qt</source>
+        <translation>pepecoin-Qt</translation>
     </message>
     <message>
         <location line="-12"/>
@@ -1137,13 +1137,13 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="+31"/>
-        <source>Automatically start Memetic after logging in to the system.</source>
-        <translation>Start Memetic automatisk ved hver innlogging.</translation>
+        <source>Automatically start PepeCoin after logging in to the system.</source>
+        <translation>Start PepeCoin automatisk ved hver innlogging.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>&amp;Start Memetic on system login</source>
-        <translation>&amp;Start Memetic ved innlogging</translation>
+        <source>&amp;Start PepeCoin on system login</source>
+        <translation>&amp;Start PepeCoin ved innlogging</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -1152,7 +1152,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Automatically open the Memetic client port on the router. This only works when your router supports UPnP and it is enabled.</source>
+        <source>Automatically open the PepeCoin client port on the router. This only works when your router supports UPnP and it is enabled.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1162,7 +1162,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Connect to the Memetic network through a SOCKS proxy (e.g. when connecting through Tor).</source>
+        <source>Connect to the PepeCoin network through a SOCKS proxy (e.g. when connecting through Tor).</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1237,7 +1237,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="+13"/>
-        <source>The user interface language can be set here. This setting will take effect after restarting Memetic.</source>
+        <source>The user interface language can be set here. This setting will take effect after restarting PepeCoin.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1248,7 +1248,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     <message>
         <location line="+13"/>
         <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation>Velg standard delt enhet for visning i grensesnittet og for sending av memetics.</translation>
+        <translation>Velg standard delt enhet for visning i grensesnittet og for sending av pepecoins.</translation>
     </message>
     <message>
         <location line="+9"/>
@@ -1304,8 +1304,8 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     <message>
         <location line="-9"/>
         <location line="+9"/>
-        <source>This setting will take effect after restarting Memetic.</source>
-        <translation>Denne innstillingen vil tre i kraft etter Memetic er blitt startet på nytt.</translation>
+        <source>This setting will take effect after restarting PepeCoin.</source>
+        <translation>Denne innstillingen vil tre i kraft etter PepeCoin er blitt startet på nytt.</translation>
     </message>
     <message>
         <location line="+29"/>
@@ -1323,7 +1323,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     <message>
         <location line="+46"/>
         <location line="+247"/>
-        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the Memetic network after a connection is established, but this process has not completed yet.</source>
+        <source>The displayed information may be out of date. Your wallet automatically synchronizes with the PepeCoin network after a connection is established, but this process has not completed yet.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1397,7 +1397,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     <name>PaymentServer</name>
     <message>
         <location filename="../paymentserver.cpp" line="+107"/>
-        <source>Cannot start memetic: click-to-pay handler</source>
+        <source>Cannot start pepecoin: click-to-pay handler</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1565,7 +1565,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Show the memetic-Qt help message to get a list with possible Memetic command-line options.</source>
+        <source>Show the pepecoin-Qt help message to get a list with possible PepeCoin command-line options.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1585,12 +1585,12 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="-104"/>
-        <source>Memetic - Debug window</source>
+        <source>PepeCoin - Debug window</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location line="+25"/>
-        <source>Memetic Core</source>
+        <source>PepeCoin Core</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1600,7 +1600,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Open the Memetic debug log file from the current data directory. This can take a few seconds for large log files.</source>
+        <source>Open the PepeCoin debug log file from the current data directory. This can take a few seconds for large log files.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1610,7 +1610,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location filename="../rpcconsole.cpp" line="+325"/>
-        <source>Welcome to the Memetic RPC console.</source>
+        <source>Welcome to the PepeCoin RPC console.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1671,7 +1671,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
         <location line="+5"/>
         <location line="+5"/>
         <source>Send Coins</source>
-        <translation>Send Memetics</translation>
+        <translation>Send PepeCoins</translation>
     </message>
     <message>
         <location line="+76"/>
@@ -1719,8 +1719,8 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
         <location line="+86"/>
         <location line="+86"/>
         <location line="+32"/>
-        <source>0.00 MEME</source>
-        <translation>123.456 MEME {0.00 ?}</translation>
+        <source>0.00 PEPE</source>
+        <translation>123.456 PEPE {0.00 ?}</translation>
     </message>
     <message>
         <location line="-191"/>
@@ -1789,8 +1789,8 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="+16"/>
-        <source>123.456 MEME</source>
-        <translation>123.456 MEME</translation>
+        <source>123.456 PEPE</source>
+        <translation>123.456 PEPE</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -1804,7 +1804,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location filename="../sendcoinsdialog.cpp" line="-173"/>
-        <source>Enter a Memetic address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
+        <source>Enter a PepeCoin address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1904,8 +1904,8 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="+247"/>
-        <source>WARNING: Invalid Memetic address</source>
-        <translation>ADVARSEL: Ugyldig Memetic adresse</translation>
+        <source>WARNING: Invalid PepeCoin address</source>
+        <translation>ADVARSEL: Ugyldig PepeCoin adresse</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -1978,7 +1978,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location filename="../sendcoinsentry.cpp" line="+1"/>
-        <source>Enter a Memetic address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
+        <source>Enter a PepeCoin address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2039,7 +2039,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="+21"/>
-        <source>Sign the message to prove you own this Memetic address</source>
+        <source>Sign the message to prove you own this PepeCoin address</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2071,7 +2071,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="+40"/>
-        <source>Verify the message to ensure it was signed with the specified Memetic address</source>
+        <source>Verify the message to ensure it was signed with the specified PepeCoin address</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2082,7 +2082,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     <message>
         <location filename="../signverifymessagedialog.cpp" line="+27"/>
         <location line="+3"/>
-        <source>Enter a Memetic address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
+        <source>Enter a PepeCoin address (e.g. B8gZqgY4r2RoEdqYk3QsAqFckyf9pRHN6i)</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2092,8 +2092,8 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Enter Memetic signature</source>
-        <translation>Skriv inn Memetic signatur</translation>
+        <source>Enter PepeCoin signature</source>
+        <translation>Skriv inn PepeCoin signatur</translation>
     </message>
     <message>
         <location line="+82"/>
@@ -2671,8 +2671,8 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     <name>bitcoin-core</name>
     <message>
         <location filename="../bitcoinstrings.cpp" line="+173"/>
-        <source>Memetic version</source>
-        <translation>Memetic versjon</translation>
+        <source>PepeCoin version</source>
+        <translation>PepeCoin versjon</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -2681,7 +2681,7 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Send command to -server or memeticd</source>
+        <source>Send command to -server or pepecoind</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2701,12 +2701,12 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Specify configuration file (default: memetic.conf)</source>
+        <source>Specify configuration file (default: pepecoin.conf)</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location line="+1"/>
-        <source>Specify pid file (default: memeticd.pid)</source>
+        <source>Specify pid file (default: pepecoind.pid)</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2724,13 +2724,13 @@ Dette betyr at det trengs en avgift på minimum %2.</translation>
         <source>%s, you must set a rpcpassword in the configuration file:
 %s
 It is recommended you use the following random password:
-rpcuser=memeticrpc
+rpcuser=pepecoinrpc
 rpcpassword=%s
 (you do not need to remember this password)
 The username and password MUST NOT be the same.
 If the file does not exist, create it with owner-readable-only file permissions.
 It is also recommended to set alertnotify so you are notified of problems;
-for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.com
+for example: alertnotify=echo %%s | mail -s &quot;PepeCoin Alert&quot; admin@foo.com
 </source>
         <translation type="unfinished"/>
     </message>
@@ -2836,7 +2836,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="-103"/>
-        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong Memetic will not work properly.</source>
+        <source>Warning: Please check that your computer&apos;s date and time are correct! If your clock is wrong PepeCoin will not work properly.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3142,7 +3142,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+10"/>
-        <source>Initialization sanity check failed. Memetic is shutting down.</source>
+        <source>Initialization sanity check failed. PepeCoin is shutting down.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3207,12 +3207,12 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+4"/>
-        <source>Error loading wallet.dat: Wallet requires newer version of Memetic</source>
+        <source>Error loading wallet.dat: Wallet requires newer version of PepeCoin</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <location line="+1"/>
-        <source>Wallet needed to be rewritten: restart Memetic to complete</source>
+        <source>Wallet needed to be rewritten: restart PepeCoin to complete</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3277,7 +3277,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+125"/>
-        <source>Unable to bind to %s on this computer. Memetic is probably already running.</source>
+        <source>Unable to bind to %s on this computer. PepeCoin is probably already running.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3317,7 +3317,7 @@ for example: alertnotify=echo %%s | mail -s &quot;Memetic Alert&quot; admin@foo.
     </message>
     <message>
         <location line="+3"/>
-        <source>Cannot obtain a lock on data directory %s. Memetic is probably already running.</source>
+        <source>Cannot obtain a lock on data directory %s. PepeCoin is probably already running.</source>
         <translation type="unfinished"/>
     </message>
     <message>

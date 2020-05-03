@@ -14,4 +14,7 @@ int64_t GetTimeOffset();
 int64_t GetAdjustedTime();
 void AddTimeData(const CNetAddr& ip, int64_t nTime);
 
+extern bool fTimeOffsetUpdated;
+extern int64_t nCachedTimeOffset;
+
 #endif

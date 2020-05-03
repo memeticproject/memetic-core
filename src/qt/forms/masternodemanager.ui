@@ -14,7 +14,16 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="topLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -25,11 +34,11 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
-         <string>Memetic Network</string>
+         <string>PepeCoin Network</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout">
          <item row="1" column="0">
@@ -42,9 +51,6 @@
            </property>
            <property name="selectionBehavior">
             <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-           <property name="sortingEnabled">
-            <bool>true</bool>
            </property>
            <attribute name="horizontalHeaderStretchLastSection">
             <bool>true</bool>
@@ -61,7 +67,7 @@
            </column>
            <column>
             <property name="text">
-             <string>Active</string>
+             <string>Status</string>
             </property>
            </column>
            <column>
@@ -87,9 +93,16 @@
             <number>0</number>
            </property>
            <item>
+              <widget class="QPushButton" name="refreshToadsButton">
+               <property name="text">
+                <string>Refresh Toad List</string>
+               </property>
+              </widget>
+             </item>
+           <item>
             <widget class="QLabel" name="label_2">
              <property name="text">
-              <string>Memetic Node Count:</string>
+              <string>Mastertoad Count:</string>
              </property>
             </widget>
            </item>
@@ -119,7 +132,7 @@
        </widget>
        <widget class="QWidget" name="tab_2">
         <attribute name="title">
-         <string>My Master Nodes</string>
+         <string>My Mastertoads</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0">
@@ -133,6 +146,27 @@
               <widget class="QPushButton" name="createButton">
                <property name="text">
                 <string>&amp;Create...</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="localButton">
+               <property name="text">
+                <string>Create &amp;Local</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="copyAddressButton">
+               <property name="text">
+                <string>Copy &amp;Address</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="refreshMyToadsButton">
+               <property name="text">
+                <string>Refresh My Toads List</string>
                </property>
               </widget>
              </item>
@@ -180,17 +214,12 @@
              </column>
              <column>
               <property name="text">
-               <string>Donation %</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string>Donation Address</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
                <string>Status</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Collateral Address</string>
               </property>
              </column>
             </widget>
@@ -208,16 +237,16 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="removeButton">
+              <widget class="QPushButton" name="getConfigButton">
                <property name="text">
-                <string>&amp;Remove</string>
+                <string>&amp;Get Config</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="UpdateButton">
+              <widget class="QPushButton" name="removeButton">
                <property name="text">
-                <string>&amp;Update</string>
+                <string>&amp;Remove</string>
                </property>
               </widget>
              </item>
@@ -241,6 +270,33 @@
              <property name="bottomMargin">
               <number>0</number>
              </property>
+             <item>
+              <widget class="QPushButton" name="startButton">
+               <property name="text">
+                <string>&amp;Start</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="stopButton">
+               <property name="text">
+                <string>Sto&amp;p</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_4">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
             </layout>
            </item>
            <item>
@@ -249,16 +305,16 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QPushButton" name="startButton">
+              <widget class="QPushButton" name="startAllButton">
                <property name="text">
-                <string>S&amp;tart</string>
+                <string>S&amp;tart All</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="startAllButton">
+              <widget class="QPushButton" name="stopAllButton">
                <property name="text">
-                <string>St&amp;art All</string>
+                <string>St&amp;op All</string>
                </property>
               </widget>
              </item>

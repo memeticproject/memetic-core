@@ -11,6 +11,10 @@
 #include "init.h"
 #include "miner.h"
 #include "kernel.h"
+#include "masternode.h"
+#include "base58.h"
+#include "wallet.h"
+#include "txdb.h"
 
 #include <boost/assign/list_of.hpp>
 
@@ -124,8 +128,8 @@ Value getstakinginfo(const Array& params, bool fHelp)
             "getstakinginfo\n"
             "Returns an object containing staking-related information.");
 
-    uint64_t nWeight = 0;
-    uint64_t nExpectedTime = 0;
+    CAmount nWeight = 0;
+    CAmount nExpectedTime = 0;
 
     if (pwalletMain)
         nWeight = pwalletMain->GetStakeWeight();
@@ -141,6 +145,27 @@ Value getstakinginfo(const Array& params, bool fHelp)
 
         nExpectedTime = staking ? (TARGET_SPACING * nNetworkWeight / nWeight) : 0;
 
+    // get number of inputs and average input size
+        uint64_t nInputCount = 0;
+        CAmount nTotalInputAmount = 0;
+        CAmount nAverageInputSize = 0;
+
+    vector<COutput> vCoins;
+    pwalletMain->AvailableCoinsForStaking(vCoins, pindexBest->GetBlockTime()+1);
+    BOOST_FOREACH(COutput output, vCoins)
+    {
+        if(!output.fSpendable)
+            continue;
+
+        const CWalletTx *pcoin = output.tx;
+        int i = output.i;
+        int64_t n = pcoin->vout[i].nValue;
+        
+        nInputCount++;
+        nTotalInputAmount += n;
+    }
+
+    nAverageInputSize = nInputCount > 0 ? nTotalInputAmount / nInputCount : 0;
 
     Object obj;
 
@@ -155,10 +180,14 @@ Value getstakinginfo(const Array& params, bool fHelp)
     obj.push_back(Pair("difficulty", GetDifficulty(GetLastBlockIndex(pindexBest, true))));
     obj.push_back(Pair("search-interval", (int)nLastCoinStakeSearchInterval));
 
-    obj.push_back(Pair("weight", (uint64_t)nWeight));
-    obj.push_back(Pair("netstakeweight", (uint64_t)nNetworkWeight));
+    obj.push_back(Pair("weight", ValueFromAmount(nWeight)));
+    obj.push_back(Pair("netstakeweight", ValueFromAmount(nNetworkWeight)));
 
     obj.push_back(Pair("expectedtime", nExpectedTime));
+
+    obj.push_back(Pair("availableinputcount", nInputCount));
+    obj.push_back(Pair("availableinputtotalamount", ValueFromAmount(nTotalInputAmount)));
+    obj.push_back(Pair("availableinputaveragesize", ValueFromAmount(nAverageInputSize)));
 
     return obj;
 }
@@ -177,10 +206,10 @@ Value checkkernel(const Array& params, bool fHelp)
     bool fCreateBlockTemplate = params.size() > 1 ? params[1].get_bool() : false;
 
     if (vNodes.empty())
-        throw JSONRPCError(-9, "Memetic is not connected!");
+        throw JSONRPCError(-9, "PepeCoin is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(-10, "Memetic is downloading blocks...");
+        throw JSONRPCError(-10, "PepeCoin is downloading blocks...");
 
     COutPoint kernel;
     CBlockIndex* pindexPrev = pindexBest;
@@ -258,12 +287,13 @@ Value getworkex(const Array& params, bool fHelp)
         );
 
     if (vNodes.empty())
-        throw JSONRPCError(-9, "Memetic is not connected!");
+        throw JSONRPCError(-9, "PepeCoin is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(-10, "Memetic is downloading blocks...");
+        throw JSONRPCError(-10, "PepeCoin is downloading blocks...");
 
-    if (pindexBest->nHeight >= Params().LastPOWBlock() && pindexBest->nHeight < Params().RestartPOWBlock())
+    if (pindexBest->nHeight >= Params().LastPOWBlock() && 
+        (pindexBest->nHeight < Params().RestartPOWBlock() || pindexBest->nHeight >= PEPE_STAKEONLY_HEIGHT))
         throw JSONRPCError(RPC_MISC_ERROR, "No more PoW blocks");
 
     typedef map<uint256, pair<CBlock*, CScript> > mapNewBlock_t;
@@ -392,12 +422,13 @@ Value getwork(const Array& params, bool fHelp)
             "If [data] is specified, tries to solve the block and returns true if it was successful.");
 
     if (vNodes.empty())
-        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Memetic is not connected!");
+        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "PepeCoin is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Memetic is downloading blocks...");
+        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "PepeCoin is downloading blocks...");
 
-    if (pindexBest->nHeight >= Params().LastPOWBlock() && pindexBest->nHeight < Params().RestartPOWBlock())
+    if (pindexBest->nHeight >= Params().LastPOWBlock() && 
+        (pindexBest->nHeight < Params().RestartPOWBlock() || pindexBest->nHeight >= PEPE_STAKEONLY_HEIGHT))
         throw JSONRPCError(RPC_MISC_ERROR, "No more PoW blocks");
 
     typedef map<uint256, pair<CBlock*, CScript> > mapNewBlock_t;
@@ -544,12 +575,13 @@ Value getblocktemplate(const Array& params, bool fHelp)
         throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid mode");
 
     if (vNodes.empty())
-        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "Memetic is not connected!");
+        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "PepeCoin is not connected!");
 
     //if (IsInitialBlockDownload())
-    //    throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "Memetic is downloading blocks...");
+    //    throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "PepeCoin is downloading blocks...");
 
-    if (pindexBest->nHeight >= Params().LastPOWBlock() && pindexBest->nHeight < Params().RestartPOWBlock())
+    if (pindexBest->nHeight >= Params().LastPOWBlock() && 
+        (pindexBest->nHeight < Params().RestartPOWBlock() || pindexBest->nHeight >= PEPE_STAKEONLY_HEIGHT))
         throw JSONRPCError(RPC_MISC_ERROR, "No more PoW blocks");
 
     // Update block
@@ -657,6 +689,27 @@ Value getblocktemplate(const Array& params, bool fHelp)
     result.push_back(Pair("curtime", (int64_t)pblock->nTime));
     result.push_back(Pair("bits", strprintf("%08x", pblock->nBits)));
     result.push_back(Pair("height", (int64_t)(pindexPrev->nHeight+1)));
+
+    CScript payee;
+    int winningNode = GetCurrentMasterNode(1);
+    if(winningNode >= 0){
+        payee =GetScriptForDestination(vecMasternodes[winningNode].pubkey.GetID());
+    } else {
+        LogPrintf("GetBlockTemplate: Failed to detect masternode to pay\n");
+        // pay the burn address if it can't detect
+        std::string burnAddy = "PKekDaqXXXXXXXXXXXXXXXXXXXXXWH8yfH";
+        CBitcoinAddress burnAddr;
+        burnAddr.SetString(burnAddy);
+        payee = GetScriptForDestination(burnAddr.Get());
+    }
+
+    CTxDestination address1;
+    ExtractDestination(payee, address1);
+    CBitcoinAddress address2(address1);
+    result.push_back(Pair("payee", address2.ToString().c_str()));
+    result.push_back(Pair("payee_amount", (int64_t)(pblock->vtx[0].vout[0].nValue * 0.375)));
+    result.push_back(Pair("masternode_payments_started", pindexPrev->nHeight + 1 > PEPE_KEKDAQ_MID_HEIGHT));
+    result.push_back(Pair("enforce_masternode_payments", pindexPrev->nHeight + 1 > PEPE_KEKDAQ_MID_HEIGHT));
 
     return result;
 }

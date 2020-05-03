@@ -50,6 +50,7 @@ Value getinfo(const Array& params, bool fHelp)
             obj.push_back(Pair("smugsend_balance", ValueFromAmount(pwalletMain->GetAnonymizedBalance())));
         obj.push_back(Pair("newmint",       ValueFromAmount(pwalletMain->GetNewMint())));
         obj.push_back(Pair("stake",         ValueFromAmount(pwalletMain->GetStake())));
+        obj.push_back(Pair("total", ValueFromAmount(pwalletMain->GetBalance()+pwalletMain->GetNewMint()+pwalletMain->GetStake())));
     }
 #endif
     obj.push_back(Pair("blocks",        (int)nBestHeight));
@@ -137,8 +138,8 @@ Value validateaddress(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 1)
         throw runtime_error(
-            "validateaddress <memeticaddress>\n"
-            "Return information about <memeticaddress>.");
+            "validateaddress <pepecoinaddress>\n"
+            "Return information about <pepecoinaddress>.");
 
     CBitcoinAddress address(params[0].get_str());
     bool isValid = address.IsValid();
@@ -169,8 +170,8 @@ Value validatepubkey(const Array& params, bool fHelp)
 {
     if (fHelp || !params.size() || params.size() > 2)
         throw runtime_error(
-            "validatepubkey <memeticpubkey>\n"
-            "Return information about <memeticpubkey>.");
+            "validatepubkey <pepecoinpubkey>\n"
+            "Return information about <pepecoinpubkey>.");
 
     std::vector<unsigned char> vchPubKey = ParseHex(params[0].get_str());
     CPubKey pubKey(vchPubKey);
@@ -209,7 +210,7 @@ Value verifymessage(const Array& params, bool fHelp)
 {
     if (fHelp || params.size() != 3)
         throw runtime_error(
-            "verifymessage <memeticaddress> <signature> <message>\n"
+            "verifymessage <pepecoinaddress> <signature> <message>\n"
             "Verify a signed message");
 
     string strAddress  = params[0].get_str();

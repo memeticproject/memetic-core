@@ -103,7 +103,7 @@ public:
             if(showTransaction && !inModel)
                 status = CT_NEW; /* Not in model, but want to show, treat as new */
             if(!showTransaction && inModel)
-                status = CT_DELETED; /* In model, but want to hide, treat as deleted */
+                status = CT_DELETED; /* In model, but want to hide, treat as deleted */                   
         }
 
         qDebug() << "   inModel=" + QString::number(inModel) +

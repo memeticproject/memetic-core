@@ -109,8 +109,9 @@ extern json_spirit::Value dumpwallet(const json_spirit::Array& params, bool fHel
 extern json_spirit::Value importwallet(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value importaddress(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value dumpprivkey(const json_spirit::Array& params, bool fHelp); // in rpcdump.cpp
+extern json_spirit::Value dumpkekdaqprivkey(const json_spirit::Array& params, bool fHelp); // in rpcdump.cpp
 extern json_spirit::Value importprivkey(const json_spirit::Array& params, bool fHelp);
-
+extern json_spirit::Value checkprivkey(const json_spirit::Array& params, bool fHelp); // in rpcdump.cpp
 extern json_spirit::Value sendalert(const json_spirit::Array& params, bool fHelp);
 
 extern json_spirit::Value getmininginfo(const json_spirit::Array& params, bool fHelp);
@@ -192,7 +193,6 @@ extern json_spirit::Value scanforstealthtxns(const json_spirit::Array& params, b
 extern json_spirit::Value darksend(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value spork(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value masternode(const json_spirit::Array& params, bool fHelp);
-extern json_spirit::Value masternodelist(const json_spirit::Array& params, bool fHelp);
 
 extern json_spirit::Value smsgenable(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value smsgdisable(const json_spirit::Array& params, bool fHelp);
@@ -211,4 +211,7 @@ extern json_spirit::Value smsgbuckets(const json_spirit::Array& params, bool fHe
 extern json_spirit::Value getmessage(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getmessages(const json_spirit::Array& params, bool fHelp);
 extern json_spirit::Value getlastmessages(const json_spirit::Array& params, bool fHelp);
+
+extern json_spirit::Value rebuildaddressindexfrom(const json_spirit::Array& params, bool fHelp);
+extern json_spirit::Value rebuildaddressindexfor(const json_spirit::Array& params, bool fHelp);
 #endif

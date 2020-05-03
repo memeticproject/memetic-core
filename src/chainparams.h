@@ -50,7 +50,7 @@ public:
         STEALTH_ADDRESS,
         EXT_PUBLIC_KEY,
         EXT_SECRET_KEY,
-
+        KEKDAQ_SECRET_KEY,
         MAX_BASE58_TYPES
     };
 

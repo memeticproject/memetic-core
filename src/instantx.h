@@ -9,8 +9,9 @@
 #include "sync.h"
 #include "net.h"
 #include "key.h"
-#include "core.h"
+//#include "primitives/transaction.h"
 #include "util.h"
+//#include "script/script.h"
 #include "script.h"
 #include "base58.h"
 #include "main.h"
@@ -43,7 +44,7 @@ void ProcessMessageInstantX(CNode* pfrom, std::string& strCommand, CDataStream& 
 void DoConsensusVote(CTransaction& tx, int64_t nBlockHeight);
 
 //process consensus vote message
-bool ProcessConsensusVote(CNode* pnode, CConsensusVote& ctx);
+bool ProcessConsensusVote(CConsensusVote& ctx);
 
 // keep transaction locks in memory for an hour
 void CleanTransactionLocksList();
@@ -63,13 +64,16 @@ public:
     bool SignatureValid();
     bool Sign();
 
-    IMPLEMENT_SERIALIZE
-    (
+    ADD_SERIALIZE_METHODS;
+
+    template <typename Stream, typename Operation>
+    inline void SerializationOp(Stream& s, Operation ser_action, int nType, int nVersion) {
+	unsigned int nSerSize = 0;
         READWRITE(txHash);
         READWRITE(vinMasternode);
         READWRITE(vchMasterNodeSignature);
         READWRITE(nBlockHeight);
-    )
+    }
 };
 
 class CTransactionLock

@@ -96,6 +96,8 @@ CAddress::CAddress(CService ipIn, uint64_t nServicesIn) : CService(ipIn)
     nServices = nServicesIn;
 }
 
+
+
 void CAddress::Init()
 {
     nServices = NODE_NETWORK;

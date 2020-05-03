@@ -1,135 +1,218 @@
-Memetic (MEME) | (PEPE) PepeCoin
-==============================
--------------------------------------------
-A Hybrid Proof of Work / Proof of Stake / Memetic Stake Rate Cryptocurrency
+![Memetic Logo](http://i.imgur.com/zLMetXi.png  "Memetic Logo") ![PepeCoin Logo](https://imgur.com/9KNdKWJ.png "PepeCoin Logo")
+***
+# PepeCoin - PEPE  / Memetic - MEME
+#### v. 3.1.1.0
 
-http://memeticproject.com (under construction)
+Memetic, also known as PepeCoin, is a digital decentralized crypto-currency, listed as as Memetic / MEME on Bittrex, Upbit, Coinmarkets, and CoinMarketCap.
 
- - Default port 29377 and RPC port 29376
+Memetic, AKA PepeCoin, incorporates both blockchain 2.0 and blockchain 3.0 technologies and is under continued development.
 
- - 60 seconds block time POW (over July 2016)
- - ~3 Months Proof of Work mining distribution ended with 12m MEME
- - X11 mining algorithm
- - Memetic Stake Rate PSR / POS enable at block 9000
- - POW End at block 70,000
+Memetic / Pepecoin is a Proof of Stake (POS) cryptocurrency with privacy features and masternode technology. Mastertoad (masternode) and stakers are rewarded for processing transactions and collectively ensuring the security of the network.
 
- - 40 confirmations for newly Proof of Work mined blocks
- - 100 confirmations for newly Proof of Stake minted blocks
- - 3.5% Premine for Development Fund - Public Ledger and Transparent
+Previously, we were a Proof of Stake and Proof of Work hybrid but due to the rise of 51% attacks we have shifted to POS until more technology improvements are discovered.
 
-  POSV Details
- ------------
-  - Proof of Stake activates at block 9000.
-  - 60 seconds per block time Proof of Stake
-  - 6 hour minimum stake age
-  - Additional security improvements
-  - Staking rewards are variable depending on the number of MEME held (below)
+Memetic / PepeCoin is decentralized, encrypted image storage in IPFS, cryptographically verified against the PepeCoin blockchain. Protect your memes and political information from censorship.
 
+Memetic / PepeCoin is the base infrastructure for the Kekdaq decentralized meme asset exchange.
 
--------------------------------------------
+PepeCoin is a fully open source, decentralized, encrypted project that supports the preservation of all freedom of speech that is within the bounds of US law.
 
-Memetic X11 Proof of Work Block Reward Schedule
-------------------------------------------------
-```
-Block   1 - 99 - 3.5% "Tendies Fund" MEME Development Fund and Checkpointing Blocks
+#### Join the offical [Telegram](https://t.me/pepecoins) room for technical support and to participate our community.
 
-* Block 100 Public Launch *
+See [Bitcointalk ANN](https://bitcointalk.org/index.php?topic=1391598.0) for more details.
 
-Block	100	   to 	900	 - 	  1500 MEME
-Block	900	   to 	1300	 - 	1200 MEME
-Block	1300	 to 	1900	 - 	1050 MEME
-Block	1900	 to 	2900	 - 	900	 MEME
-Block	2900	 to 	4100	 - 	750	 MEME
-Block	4100	 to 	6680	 - 	600	 MEME
-Block	6680	 to 	9260	 - 	400	 MEME
-Block	9260	 to 	11840	 - 	500	 MEME
-Block	11840	 to 	14420	 - 	200	 MEME
-Block	14420	 to 	17000	 - 	300	 MEME
-Block	17000	 to 	19580	 - 	100	 MEME
-Block	19580	 to 	22160	 - 	200	 MEME
-Block	22160	 to 	24740	 - 	90	 MEME
-Block	24740	 to 	27320	 - 	130	 MEME
-Block	27320	 to 	29900	 - 	80	 MEME
-Block	29900	 to 	32480	 - 	100	 MEME
-Block	32480	 to 	35060	 - 	70	 MEME
-Block	35060	 to 	37640	 - 	100	 MEME
-Block	37640	 to 	40220	 - 	60	 MEME
-Block	40220	 to 	42800	 - 	100	 MEME
-Block	42800	 to 	45380	 - 	50	 MEME
-Block	45380	 to 	47960	 - 	100	 MEME
-Block	47960	 to 	50540	 - 	40	 MEME
-Block	50540	 to 	53120	 - 	100	 MEME
-Block	53120	 to 	55700	 - 	40	 MEME
-Block	55700	 to 	58280	 - 	100	 MEME
-Block	58280	 to 	60860	 - 	40	 MEME
-Block	60860	 to 	63440	 - 	100	 MEME
-Block	63440	 to 	66020	 - 	40	 MEME
-Block	66020	 to 	68600	 - 	100	 MEME
-Block	68600	 to 	70000	 - 	40	 MEME
+***
+#### Technical Specifications
+#####
+ - Default port 29377 
+ - RPC port 29376
+ - 60 second block time
+#####
+- Proof of Stake - POS - 7% at block 600,000, reducing yearly.  Currently 3.25% per year, reducing 50% each year
+- Proof of Work - POW ended at block 1,700,000 in late 2018 to reduce chain reorganization issues and improve the stability of Kekdaq
+- X11 mining algorithm (Sequential mixing of Blake256, BMW, Grostl, JH, Keccak, Skein, Luffa, Cubehash, SHA-3, SIMD, and ECHO)
+- PEPE / MEME is Full Proof-of-Stake beginning at block 1700000. The POW reward rate was migrated to the POS reward, at 3.25% per year, reducing 50% each year.
+- 600 confirmations for newly Proof of Stake minted blocks
+- 6 hour minimum stake age with 12 hour average
+- Additional security improvements
+  
+ **Features**
+
+- Decentralized encrypted private messaging
+- Stealth Addresses
+- Fully blockchain based, public decentralized encrypted messaging chat wall in wallet
+- In wallet public messaging wall  - set messagewall=1 in pepecoin.conf to enable
+- JSON-RPC functions to externally query all public wall messages
+- Integrated block explorer
+- Image timestamping on the blockchain for proof of ownership
+- In-wallet hash image verification checking functions
+- JSON-RPC functions to externally query blockchain for hashed image datas
+- IPFS-based data hashing storage currently under development
+- Integrated Bittrex trading functions
+- Mastertoads pay 37.5% of all mined POS blocks, distributed among MT owners
+- Kekdaq decentralized meme "asset" platform live in testing / development stage
+
+See [bitcointalk.org](https://bitcointalk.org/index.php?topic=1391598.0) post for more info: https://bitcointalk.org/index.php?topic=1391598.0
+
+-------------------------------
+## Downloading & Compiling
+-------------------------------
+ 
+### Windows Wallet
+
+https://github.com/pepeteam/pepecoin/releases
 
 
-POW End Block 70,000 Approx 3 Months
+#### Linux Builds:
 
-Total from 1 Yr. POW: Approx 11.5m MEME
+PepeCoin uses libsecp256k1, libgmp, Boost1.55+, Openssl1.01, Berkeley DB 4.8+, and QT5 to compile.
 
-Development fund: 562,390 MEME
+Ubuntu 18.04+ or Debian 9+ is recommended. See the RELEASES tab for Windows wallets. OSX coming soon.
 
-Total MEME in POW & Fund: Approx 12m MEME
+The strip command removes debugging data and lessens exectuable size.
 
+#### Instructions for Building Command Line Daemon
+>
 
-```
+>sudo apt-get install build-essential libtool autotools-dev automake pkg-config libevent-dev bsdmainutils libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev libminiupnpc-dev libgmp3-dev libdb-dev libdb++-dev libgmp3-dev lzma-dev libssl1.0-dev zlib1g-dev zlib1g libgmp-dev 
+>	
+>git clone https://github.com/pepeteam/pepecoin.git
+>
+>cd pepecoin/src
+>
+>make -f makefile.unix
+>
+> OR (if you intend to open ports yourself)
+>
+>make -f makefile.unix USE_UPNP=0
+>
+>strip pepecoind
+>
 
+Remove libssl1.0-dev and replace with libssl-dev in the apt-get list to compile on older versions like 16.04.
 
-Memetic Stake Rate (PSR) %  POSV Reward Schedule
----------------------------------
+#### Instructions for Building GUI Wallet
 
-| MEME Amount    | Stake % Year 1|  Year 2  |  Year 3+ |
-|:-------------|:-------------:|------------:|------------:|
- |0 to 10000  |  3.0%|  2.0% | 1.0% |
- |10,000+     |  4.0%| 3.0% | 2.0% |
- |50,000+  | 5.0% | 4.0% | 3.0% |
- |100,000+ |    6.0% | 5.0% | 4.0% |
-
-----------------------------------
-
-
-Proof of Sadfrog (POSF)
-----------------
- - Security improved open source "Fair-Weight" Proof of Sadfrog protocol technology
-
- - Coin holders benefit from multiple block stakes and are rewarded for running regularly as a node.
-
- - Proof of Sadfrog also  keeps the network alive by slowing coin age after 1 month with an aging half life of 90 days. Keep the magic alive.
-
- - MemeticLife technology ensures MEME holders contribute to the health of the network at least once each month to earn the highest possible rewards, and incentivises running full nodes and/or keeping wallets open to increase MEME network security.
-
- -------------------------------
-Additional Information
-------------------------------
-
-Memetic uses libsecp256k1, libgmp, Boost1.55, OR Boost1.57, Openssl1.01p, Berkeley DB 4.8, QT5 to compile
-
-Ubuntu / Debian Build Dependencies
-
-sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils
-
-sudo apt-get install libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev libminiupnpc-dev libgmp3-dev
+>sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler qt5-default 
+>
+>sudo apt-get install build-essential libtool autotools-dev automake pkg-config libevent-dev bsdmainutils libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev libminiupnpc-dev libgmp3-dev libdb-dev libdb++-dev libgmp3-dev lzma-dev libssl1.0-dev zlib1g-dev zlib1g libgmp-dev
+>
+>git clone https://github.com/pepeteam/pepecoin.git
+>
+>cd pepecoin 
+>
+>qmake
+>
+>make -j2 -f Makefile
+>
+--------------------
+# Links
 
 
-```
+[Windows Wallet](https://github.com/pepeteam/pepecoin/releases) 
 
-Copyright (c) 2009-2010 Satoshi Nakamoto
-Copyright (c) 2009-2012 The Bitcoin developers
-Copyright (c) 2012 Litecoin Developers
-Copyright (c) 2013 Peercoin Developers
-Copyright (c) 2014 DarkCoin Developers
-Copyright (c) 2014 BlackCoin Developers
-Copyright (c) 2014 Digibyte Developers
-Copyright (c) 2014 DashCoin Developers
-Copyright (c) 2014 NetCoin Developers
-Copyright (c) 2015 Transfercoin Developer
-Copyright (c) 2015-2016 Memetic Developers
+[Bitcointalk ANN](https://bitcointalk.org/index.php?topic=1391598.0) 
 
- ```
 
-![alt text](http://i2.kym-cdn.com/photos/images/newsfeed/000/095/218/feels-good-man.jpg "Memetic approves")
+### Websites
+https://memetic.ai
+
+https://pepecoin.co
+
+https://kekdaq.com
+
+### Exchanges
+
+[Bittrex (USA)](https://bittrex.com/Market/Index?MarketName=BTC-MEME) -- Largest regulated and secure US exchange
+
+[Upbit (ASIA)](https://upbit.com/exchange?code=CRIX.UPBIT.BTC-MEME) -- Popular South Korean exchange
+
+[Changenow (Worldwide)](https://changenow.io/) -- Shapeshift type service accepting cc purchases
+
+[Coinswitch (Worldwide)](https://coinswitch.co/) -- Shapeshift type service
+
+[Coinexchange (EU)](https://www.coinexchange.io/market/MEME/BTC)
+
+<s>[Cryptopia](https://www.cryptopia.co.nz/Exchange?market=PEPE_BTC)</s> -- Remove requested after exchange hacked
+
+### Block Explorer
+
+[http://explorer.memetic.ai/](http://explorer.memetic.ai/)
+
+### Charts
+
+[CoinMarketCap](https://coinmarketcap.com/currencies/pepecoin/)
+
+[CoinGekko](https://www.coingecko.com/en/coins/memetic)
+
+[WorldCoinIndex](https://www.worldcoinindex.com/coin/memetic)
+
+[CryptoCompare](https://www.cryptocompare.com/coins/meme/charts/BTC)
+
+[BitInfoCharts](https://bitinfocharts.com/markets/bittrex/meme-btc-1m.html)
+
+[CryptoCoinView](https://cryptocoinview.com/MEME)
+
+[CoinLib](https://coinlib.io/coin/MEME/Pepe+Memetic)
+
+[TradingView](https://www.tradingview.com/symbols/MEMEBTC/)
+
+### Social
+
+[Twitter](https://twitter.com/pepecoins) 
+
+[Telegram](https://t.me/pepecoins)  - Official MEME / PEPE Support and Community Room
+
+
+***
+
+**Nodes**
+addnode=seed.pepecoin.net
+
+addnode=seed.kekdaq.com
+
+addnode=seed.memetic.ai
+
+![pepecoin-256](https://i.imgur.com/xnSJvT9.jpg  "pepecoin-256")
+
+------------------
+------------------
+License
+------------------
+>##### Memetic / PepeCoin / Kekdaq are open source softwares released under the GNU GPL v3 license.  
+>
+>Basically, you must also release the source code of your project if you use code from ours.
+>
+>Copyright (c) 2009-2010 Satoshi Nakamoto
+>Copyright (c) 2009-2012 The Bitcoin Developers
+>Copyright (c) 2012 Litecoin Developers
+>Copyright (c) 2013 Peercoin Developers
+>Copyright (c) 2014 DarkCoin Developers
+>Copyright (c) 2014 BlackCoin Developers
+>Copyright (c) 2014 Digibyte Developers
+>Copyright (c) 2014 DashCoin Developers
+>Copyright (c) 2015 Transfercoin Developers
+>Copyright (c) 2015-2016 PepeCoin Developers
+>Copyright (c) 2015-2016 Memetic Developers
+>Copyright (c) 2017-2019 Memetic / PepeCoin Developers
+>
+>Permission is hereby granted, free of charge, to any person obtaining a copy
+>of this software and associated documentation files (the "Software"), to deal
+>in the Software without restriction, including without limitation the rights
+>to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+>copies of the Software, and to permit persons to whom the Software is
+>furnished to do so, subject to the following conditions:
+>
+>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+>IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+>FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+>AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+>LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+>OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+>THE SOFTWARE.
+>
+>The above copyright notices and this permission notice shall be included in
+>all copies or substantial portions of the Software.
+>
+> See LICENSE file for more info.
+------------------

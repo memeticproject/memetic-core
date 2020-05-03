@@ -49,6 +49,7 @@ private:
     leveldb::Options options;
     bool fReadOnly;
     int nVersion;
+    uint256 salt;
 
 protected:
     // Returns true and sets (value,false) if activeBatch contains the given key

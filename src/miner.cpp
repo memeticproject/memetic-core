@@ -7,8 +7,7 @@
 #include "txdb.h"
 #include "miner.h"
 #include "kernel.h"
-#include "masternodeman.h"
-#include "masternode-payments.h"
+#include "masternode.h"
 
 using namespace std;
 
@@ -535,26 +534,29 @@ bool CheckStake(CBlock* pblock, CWallet& wallet)
     return true;
 }
 
+static int64_t nBlockThrottle = GetArg("-blockthrottle", 5000); // make this a static as we only need to load it once
 void ThreadStakeMiner(CWallet *pwallet)
 {
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
 
     // Make this thread recognisable as the mining thread
-    RenameThread("memetic-miner");
+    RenameThread("pepecoin-miner");
 
     CReserveKey reservekey(pwallet);
 
     bool fTryToSync = true;
-
-    while (true)
+    // Moved the check for 3 or more connections and up to date blockchain out of the main staking loop
+    while(true)
     {
+        boost::this_thread::interruption_point();
+        
         while (pwallet->IsLocked())
         {
             nLastCoinStakeSearchInterval = 0;
             MilliSleep(1000);
         }
 
-        while (vNodes.empty() || IsInitialBlockDownload())
+        while (vNodes.size() < 2 || IsInitialBlockDownload())
         {
             nLastCoinStakeSearchInterval = 0;
             fTryToSync = true;
@@ -571,6 +573,14 @@ void ThreadStakeMiner(CWallet *pwallet)
             }
         }
 
+        break;
+    }
+
+    // We have 3 or more connections and are caught up on the blockchain, so start the staking loop
+    while (true)
+    {
+        boost::this_thread::interruption_point();
+
         //
         // Create new block
         //
@@ -583,6 +593,12 @@ void ThreadStakeMiner(CWallet *pwallet)
         if (pblock->SignBlock(*pwallet, nFees))
         {
             SetThreadPriority(THREAD_PRIORITY_NORMAL);
+            // Pause after finding a block, before broadcasting it wait a little bit
+            // in case there is a block coming in and the block is stale
+            // Also helps throttle lots of inputs so they aren't all hitting at once
+            // in rapid fire succession and generating lots of ? conflicted stakes.
+            // 5 second default.
+            MilliSleep(nBlockThrottle);
             CheckStake(pblock.get(), *pwallet);
             SetThreadPriority(THREAD_PRIORITY_LOWEST);
             MilliSleep(500);
